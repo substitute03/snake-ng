@@ -7,23 +7,14 @@ export class Snake{
     public directionToMove: Direction = Direction.left;
     public isOutOfBounds: boolean = false;
     public hasCollidedWithSelf: boolean = false;
-
-    private _countPelletsConsumed: number = 0;
-    get countPelletsConsumed(): number {
-      return this._countPelletsConsumed;
-    }
-    set countPelletsConsumed(value: number) {
-        this._countPelletsConsumed = value;
-    }
-
-    public _head: Cell = this.cells[0];
+    public countPelletsConsumed: number = 0;
+    
     get head(): Cell {
-        return this._head;
+        return this.cells[0];
     }
 
-    public _tail: Cell = this.cells[this.cells.length - 1];
     get tail(): Cell {
-        return this._tail;
+        return this.cells[this.cells.length - 1];
     }
 
     public constructor(){}

@@ -1,9 +1,5 @@
-export enum CellType {
-    Empty = "empty",
-    Pellet = "pellet",
-    Snake = "snake"
-  }
-  
+import { CellType } from "./enums";
+
 export class Cell{
   private _cellType: CellType = CellType.Empty;
   get cellType(): CellType {

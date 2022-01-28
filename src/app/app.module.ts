@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import { CellComponent } from './cell/cell.component';
 import { GameComponent } from './game/game.component';
 import { GameboardComponent } from './gameboard/gameboard.component';
 
@@ -11,8 +10,7 @@ import { GameboardComponent } from './gameboard/gameboard.component';
   declarations: [
     AppComponent,
     GameComponent,
-    GameboardComponent,
-    CellComponent
+    GameboardComponent
   ],
   imports: [
     BrowserModule,
