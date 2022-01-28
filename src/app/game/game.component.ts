@@ -45,6 +45,7 @@ export class GameComponent {
 
   public reset(): void{
     this.gameboard!.reset();
+    this.score = 0;
     this.storedKeyPresses = [];
   }
 
@@ -60,8 +61,12 @@ export class GameComponent {
     this.message = "";
   }
 
-  @HostListener('document:keypress', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent) { 
+  public handlePelletConsumed(): void{
+    this.gameboard?.spawnPellet();
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  public handleKeyboardEvent(event: KeyboardEvent) { 
      let key: string = event.key;
 
      if (this.gameState != GameState.InProgress){

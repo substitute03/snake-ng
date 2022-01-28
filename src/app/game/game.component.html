@@ -7,7 +7,7 @@
     <h3>Score: {{score}}</h3>
 </div>
 <div class="row col-12 text-center">
-    <sng-gameboard #gameboard></sng-gameboard>
+    <sng-gameboard #gameboard (pelletConsumed)="handlePelletConsumed()"></sng-gameboard>
 </div>
 <div class="row text-center mt-4">
     <div class="col-4 offset-4">

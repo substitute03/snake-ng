@@ -1,8 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, Output } from '@angular/core';
 import { Cell } from 'src/domain/cell';
 import { Direction } from 'src/domain/direction';
 import { CellType } from 'src/domain/enums';
 import { Snake } from 'src/domain/snake';
+import { EventEmitter } from '@angular/core';
 
 const boardSize: number = 15;
 
@@ -15,6 +16,8 @@ export class GameboardComponent {
   public cells: Cell[] = [];
   public snake: Snake = new Snake();
   
+  @Output() pelletConsumed = new EventEmitter<void>(); 
+
   constructor(private changeDetector: ChangeDetectorRef) {
     this.create();
     this.moveSnake.bind(this);
@@ -42,15 +45,7 @@ export class GameboardComponent {
   }
 
   public spawnPellet(): void{
-    let doesPelletExist =
-      this.cells.find(c => c.cellType === CellType.Pellet) !== undefined;
-
-    if (!doesPelletExist){
-      this.getEmptyCell().cellType = CellType.Pellet;
-    }
-    else{
-      console.error("Pellet already exists on the gameboard."); 
-    }
+    this.getEmptyCell().cellType = CellType.Pellet;
   }
 
   private getEmptyCell() : Cell{
@@ -87,6 +82,7 @@ export class GameboardComponent {
       case CellType.Pellet:
         this.snake.currentDirection = directionToMove;
         this.snake.consumePellet();
+        this.pelletConsumed.emit();
     }
     
     this.snake.cells.unshift(moveToCell);
