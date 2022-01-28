@@ -1,1 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+.gameboard {
+    display: inline-grid;
+    grid-template-columns: repeat(15, auto);
+    border-left: 1px solid #000000;
+    border-top: 1px solid #000000;
+}
+    .gameboard > .cell {
+        border-right: 1px solid #000000;
+        border-bottom: 1px solid #000000;
+        height: 50px;
+        width: 50px;
+    }
+        .gameboard > .cell.snake {
+            background-color: green;
+        }
+        .gameboard > .cell.blazingSnake {
+            background-color: orange;
+        }
+        .gameboard > .cell.empty {
+            background-color: white;
+        }
+        .gameboard > .cell.pellet {
+            background-color: black;
+        }
