@@ -1,1 +1,20 @@
-<p>menu works!</p>
+<div class="row col-12 text-center">
+    <h1 class="mb-4">    
+        <img class="img-fluid" style="width:90px" src="/assets/images/angular.svg">SnakeNg
+    </h1>
+</div>
+
+<div class="row col-2 offset-5 text-center">
+    <div class="mb-3 p-0">
+        <label for="gameModes" class="form-label h5">Game Mode</label>
+        <select [(ngModel)]="selectedGameMode" class="form-select" aria-label="game modes">
+            <option value="" disabled selected>Select...</option>
+            <option *ngFor="let mode of gameModes">{{mode}}</option>
+        </select>
+    </div>
+
+    <button type="submit" (click)="handlePlayClicked()" class="btn btn-primary">Play</button>
+</div>
+
+
+
