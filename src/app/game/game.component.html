@@ -14,6 +14,11 @@
 <div class="row col-12 text-center">
     <sng-gameboard #gameboard (pelletConsumed)="handlePelletConsumed()"></sng-gameboard>
 </div>
+<div class="row text-center mt-4">
+    <div class="col-4 offset-4">
+        <h3>{{message}}</h3>
+    </div>
+</div>
 <div *ngIf="isPreGameOrGameOver" class="mt-4">
     <div class="row text-center">
         <div class="col-4 offset-4">
@@ -24,10 +29,5 @@
         <div class="col-4 offset-4">
             <a class="btn btn-outline-danger btn-lg" routerLink="/">Main Menu</a>
         </div>
-    </div>
-</div>
-<div class="row text-center mt-4">
-    <div class="col-4 offset-4">
-        <h3>{{message}}</h3>
     </div>
 </div>
