@@ -1,4 +1,5 @@
 export enum GameState{
+    PreGame,
     Setup,
     InProgress,
     GameOver

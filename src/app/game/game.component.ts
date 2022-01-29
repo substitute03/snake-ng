@@ -13,8 +13,13 @@ export class GameComponent {
 
   public score: number = 0;
   public message: string = "";
-  private gameState: GameState = GameState.Setup;
+  public gameState: GameState = GameState.PreGame;
   private storedKeyPresses: string[] = [];
+
+  public get isPreGameOrGameOver(): boolean{
+    return this.gameState === GameState.PreGame ||
+           this.gameState === GameState.GameOver;
+  }
 
   constructor(private changeDetector: ChangeDetectorRef) {}
   
