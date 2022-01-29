@@ -28,14 +28,14 @@ export class GameComponent {
 
     do{
       let nextDirection: Direction = Direction.fromKey(this.storedKeyPresses[0])
-
+      
       if (this.storedKeyPresses.length > 0){
         this.storedKeyPresses.shift();
       }
 
       await this.gameboard!.moveSnake(nextDirection);
       this.score = this.gameboard!.snake.countPelletsConsumed;
-      await sleep(80);
+      await sleep(80);   
     } while(!this.gameboard!.snake.isOutOfBounds &&
             !this.gameboard!.snake.hasCollidedWithSelf);
     
@@ -50,14 +50,10 @@ export class GameComponent {
   }
 
   private async playCountdown(): Promise<void>{
-    this.message = "3";
-    await sleep(850);
-    this.message = "2";
-    await sleep(850);
-    this.message = "1";
-    await sleep(850);
-    this.message = "Go!";
-    await sleep(850);
+    this.message = "3"; await sleep(850);
+    this.message = "2"; await sleep(850);
+    this.message = "1"; await sleep(850);
+    this.message = "Go!"; await sleep(850);
     this.message = "";
   }
 

@@ -4,13 +4,15 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { GameComponent } from './game/game.component';
 import { GameboardComponent } from './gameboard/gameboard.component';
+import { MenuComponent } from './menu/menu.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     GameComponent,
-    GameboardComponent
+    GameboardComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
