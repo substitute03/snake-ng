@@ -1,13 +1,9 @@
-<div class="row col-lg-12 text-center">
-    <div class="row col-lg-12">
-        <h1 class="mb-2">    
-            <img class="img-fluid" style="width:90px" src="/assets/images/angular.svg">SnakeNg
-        </h1>
-    </div>
-</div>
-
-<div class="row col-lg-2 offset-lg-5 text-center">
-    <div class="mb-3 p-0">
+<div class="row col-12 text-center mb-5">
+    <h1 class="mb-2">    
+        <img class="img-fluid" style="width:90px" src="/assets/images/angular.svg">SnakeNg
+    </h1>
+    
+    <div class="row col-2 offset-5 p-0 mb-3">
         <label for="gameModes" class="form-label h5">Game Mode</label>
         <select [(ngModel)]="selectedGameMode" class="form-select" aria-label="game modes">
             <option value="" disabled selected>Select...</option>
@@ -15,8 +11,5 @@
         </select>
     </div>
 
-    <button type="submit" (click)="handlePlayClicked()" class="btn btn-danger">Play</button>
+    <button type="submit" (click)="handlePlayClicked()" class="btn btn-danger row col-2 offset-5">Play</button>
 </div>
-
-
-

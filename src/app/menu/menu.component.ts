@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GameMode } from 'src/domain/enums';
 
@@ -8,6 +8,8 @@ import { GameMode } from 'src/domain/enums';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
+  @HostBinding('class') classes = 'row col-lg-12 align-items-center vh-100';
+
   public selectedGameMode: string = "";
   public gameModes: string[] = [];
 
