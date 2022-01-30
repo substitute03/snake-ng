@@ -5,10 +5,10 @@ import { GameboardComponent } from '../gameboard/gameboard.component';
 
 @Component({
   selector: 'sng-game',
-  templateUrl: './game.component.html',
-  styleUrls: ['./game.component.css']
+  templateUrl: './game-classic.component.html',
+  styleUrls: ['./game-classic.component.css']
 })
-export class GameComponent {
+export class GameClassicComponent {
   @ViewChild('gameboard') gameboard?: GameboardComponent;
 
   public score: number = 0;
