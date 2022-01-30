@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild } from '@
 import { Direction } from 'src/domain/direction';
 import { GameState } from 'src/domain/enums';
 import { GameboardComponent } from '../gameboard/gameboard.component';
+import { timer, of, Subscription } from 'rxjs';
 
 @Component({
   selector: 'sng-game-blitz',
@@ -11,10 +12,14 @@ import { GameboardComponent } from '../gameboard/gameboard.component';
 export class GameBlitzComponent {
   @ViewChild('gameboard') gameboard?: GameboardComponent;
 
+  private stopwatchSubscription = new Subscription();
+  private readonly timeLimit: number = 5;
+  private timeleft: number = this.timeLimit;
   public score: number = 0;
   public message: string = "";
   public gameState: GameState = GameState.PreGame;
   private storedKeyPresses: string[] = [];
+  private timerLength: number = 10000;
 
   public get isPreGameOrGameOver(): boolean{
     return this.gameState === GameState.PreGame ||
@@ -30,6 +35,7 @@ export class GameBlitzComponent {
     this.gameboard!.spawnPellet();   
     await this.playCountdown();
     this.gameState = GameState.InProgress;
+    this.startTimer();
 
     do{
       let nextDirection: Direction = Direction.fromKey(this.storedKeyPresses[0])
@@ -42,8 +48,10 @@ export class GameBlitzComponent {
       this.score = this.gameboard!.snake.countPelletsConsumed;
       await sleep(80);   
     } while(!this.gameboard!.snake.isOutOfBounds &&
-            !this.gameboard!.snake.hasCollidedWithSelf);
+            !this.gameboard!.snake.hasCollidedWithSelf &&
+             this.timeleft != 0);
     
+    this.stopwatchSubscription.unsubscribe();
     this.gameState = GameState.GameOver;
     this.message = "Game over!";
   }
@@ -60,6 +68,15 @@ export class GameBlitzComponent {
     this.message = "1"; await sleep(850);
     this.message = "Go!"; await sleep(850);
     this.message = "";
+  }
+
+  private async startTimer(): Promise<void>{
+    const stopwatch = timer(0, 1000);
+
+    this.stopwatchSubscription = stopwatch.subscribe(secondsPassed => { 
+      this.timeleft = this.timeLimit - secondsPassed;
+      this.message = this.timeleft.toString() 
+    });
   }
 
   public handlePelletConsumed(): void{
