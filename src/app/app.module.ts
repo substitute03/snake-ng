@@ -3,9 +3,10 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import { GameClassicComponent } from './game/game-classic.component';
+import { GameClassicComponent } from './game-classic/game-classic.component';
 import { GameboardComponent } from './gameboard/gameboard.component';
 import { MenuComponent } from './menu/menu.component';
+import { GameBlitzComponent } from './game-blitz/game-blitz.component';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { MenuComponent } from './menu/menu.component';
     AppComponent,
     GameClassicComponent,
     GameboardComponent,
-    MenuComponent
+    MenuComponent,
+    GameBlitzComponent
   ],
   imports: [
     BrowserModule,
