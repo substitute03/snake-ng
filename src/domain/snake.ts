@@ -26,6 +26,13 @@ export class Snake{
     }
 
     public consumePellet(): void{
-        this.countPelletsConsumed++;
+        if (this.isBlazing){
+            this.countPelletsConsumed += 2;
+        }
+        else{
+            this.countPelletsConsumed += 1;
+        }
     }
+
+    public isBlazing: boolean = false;
 }

@@ -1,1 +1,33 @@
-<p>game-blitz works!</p>
+<div class="row col-lg-12 text-center">
+    <div class="row col-lg-12">
+        <h1 class="mb-2">    
+            <img class="img-fluid" style="width:90px" src="/assets/images/angular.svg">SnakeNg
+        </h1>
+    </div>
+</div>
+<div class="row col-12 text-center">
+    <h2 class="text-danger">Blitz</h2>
+</div>
+<div class="row col-12 text-center">
+    <h3>Score: {{score}}</h3>
+</div>
+<div class="row col-12 text-center">
+    <sng-gameboard #gameboard (pelletConsumed)="handlePelletConsumed()"></sng-gameboard>
+</div>
+<div class="row text-center mt-4">
+    <div class="col-4 offset-4">
+        <h3>{{message}}</h3>
+    </div>
+</div>
+<div *ngIf="isPreGameOrGameOver" class="mt-4">
+    <div class="row text-center">
+        <div class="col-4 offset-4">
+            <button type="button" class="btn btn-danger btn-lg btn-block" (click)="startGameLoop()">Play</button>
+        </div>
+    </div>
+    <div class="row text-center mt-3">
+        <div class="col-4 offset-4">
+            <a class="btn btn-outline-danger btn-lg" routerLink="/">Main Menu</a>
+        </div>
+    </div>
+</div>
