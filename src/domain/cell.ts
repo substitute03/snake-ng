@@ -1,14 +1,7 @@
 import { CellType } from "./enums";
 
 export class Cell{
-  private _cellType: CellType = CellType.Empty;
-  get cellType(): CellType {
-    return this._cellType;
-  }
-  set cellType(value: CellType) {
-      this._cellType = value;
-  }
-
+  public cellType: CellType = CellType.Empty;
   public readonly x: number;
   public readonly y: number;
 
