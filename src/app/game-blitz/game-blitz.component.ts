@@ -1,8 +1,9 @@
-import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, ViewChild } from '@angular/core';
 import { Direction } from 'src/domain/direction';
 import { GameState } from 'src/domain/enums';
 import { GameboardComponent } from '../gameboard/gameboard.component';
-import { timer, of, Subscription } from 'rxjs';
+import { timer, Subscription } from 'rxjs';
+import { SecondsToMinutesPipe } from '../pipes/seconds-to-minutes-pipe.pipe';
 
 @Component({
   selector: 'sng-game-blitz',
@@ -13,20 +14,19 @@ export class GameBlitzComponent {
   @ViewChild('gameboard') gameboard?: GameboardComponent;
 
   private stopwatchSubscription = new Subscription();
-  private readonly timeLimit: number = 5;
+  private readonly timeLimit: number = 120;
   private timeleft: number = this.timeLimit;
   public score: number = 0;
   public message: string = "";
   public gameState: GameState = GameState.PreGame;
   private storedKeyPresses: string[] = [];
-  private timerLength: number = 10000;
-
+  
   public get isPreGameOrGameOver(): boolean{
     return this.gameState === GameState.PreGame ||
            this.gameState === GameState.GameOver;
   }
 
-  constructor(private changeDetector: ChangeDetectorRef) {}
+  constructor(private changeDetector: ChangeDetectorRef, private secondsToMinutesPipe: SecondsToMinutesPipe) {}
   
   public async startGameLoop(): Promise<void>{
     this. gameState = GameState.Setup;
@@ -75,7 +75,8 @@ export class GameBlitzComponent {
 
     this.stopwatchSubscription = stopwatch.subscribe(secondsPassed => { 
       this.timeleft = this.timeLimit - secondsPassed;
-      this.message = this.timeleft.toString() 
+      this.message = secondsToMinutes(this.timeleft);
+      this.changeDetector.detectChanges();
     });
   }
 
@@ -122,4 +123,11 @@ export class GameBlitzComponent {
 
 function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function secondsToMinutes(seconds: number): string{
+  let minutesLeft: number = Math.floor(+seconds / 60);
+  let secondsLeft: number = +seconds % 60;
+
+  return `${minutesLeft}:${secondsLeft >= 10 ? secondsLeft : "0" + secondsLeft}`;
 }

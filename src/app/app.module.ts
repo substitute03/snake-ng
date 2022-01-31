@@ -8,7 +8,7 @@ import { GameboardComponent } from './gameboard/gameboard.component';
 import { MenuComponent } from './menu/menu.component';
 import { GameBlitzComponent } from './game-blitz/game-blitz.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { SecondsToMinutesPipe } from './pipes/seconds-to-minutes-pipe.pipe';
 
 @NgModule({
   declarations: [
@@ -16,7 +16,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     GameClassicComponent,
     GameboardComponent,
     MenuComponent,
-    GameBlitzComponent
+    GameBlitzComponent,
+    SecondsToMinutesPipe 
   ],
   imports: [
     BrowserModule,
@@ -29,7 +30,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       { path: '**', component: MenuComponent } // wildcard path if the path doesn't match anything
     ])
   ],
-  providers: [],
+  providers: [SecondsToMinutesPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
