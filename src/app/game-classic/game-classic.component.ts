@@ -56,11 +56,12 @@ export class GameClassicComponent {
   }
 
   private async playCountdown(): Promise<void>{
-    this.message = "3"; await utils.sleep(850);
-    this.message = "2"; await utils.sleep(850);
-    this.message = "1"; await utils.sleep(850);
-    this.message = "Go!"; await utils.sleep(850);
-    this.message = "";
+    for (let i: number = 4; i >= 0; i--){
+      this.message = i > 1 ? (i-1).toString() : i === 1 ? "Go!" : "";
+      if (i > 0){
+        await utils.sleep(700);
+      }
+    }
   }
 
   public handlePelletConsumed(): void{

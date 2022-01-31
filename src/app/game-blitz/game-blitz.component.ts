@@ -3,7 +3,6 @@ import { Direction } from 'src/domain/direction';
 import { GameState } from 'src/domain/enums';
 import { GameboardComponent } from '../gameboard/gameboard.component';
 import { timer, Subscription } from 'rxjs';
-import { SecondsToMinutesPipe } from '../pipes/seconds-to-minutes-pipe.pipe';
 import * as utils from 'src/app/utils'
 
 @Component({
@@ -21,13 +20,15 @@ export class GameBlitzComponent {
   public message: string = "";
   public gameState: GameState = GameState.PreGame;
   private storedKeyPresses: string[] = [];
+  public progressBarPercentage: number = 0;
+  private blazingCounter: number = 0;
   
   public get isPreGameOrGameOver(): boolean{
     return this.gameState === GameState.PreGame ||
            this.gameState === GameState.GameOver;
   }
 
-  constructor(private changeDetector: ChangeDetectorRef, private secondsToMinutesPipe: SecondsToMinutesPipe) {}
+  constructor(private changeDetector: ChangeDetectorRef) {}
   
   public async startGameLoop(): Promise<void>{
     this. gameState = GameState.Setup;
@@ -64,11 +65,12 @@ export class GameBlitzComponent {
   }
 
   private async playCountdown(): Promise<void>{
-    this.message = "3"; await utils.sleep(850);
-    this.message = "2"; await utils.sleep(850);
-    this.message = "1"; await utils.sleep(850);
-    this.message = "Go!"; await utils.sleep(850);
-    this.message = "";
+    for (let i: number = 4; i >= 0; i--){
+      this.message = i > 1 ? (i-1).toString() : i === 1 ? "Go!" : "";
+      if (i > 0){
+        await utils.sleep(700);
+      }
+    }
   }
 
   private async startTimer(): Promise<void>{
@@ -77,7 +79,6 @@ export class GameBlitzComponent {
     this.stopwatchSubscription = stopwatch.subscribe(secondsPassed => { 
       this.timeleft = this.timeLimit - secondsPassed;
       this.message = utils.secondsToMinutes(this.timeleft);
-      this.changeDetector.detectChanges();
     });
   }
 

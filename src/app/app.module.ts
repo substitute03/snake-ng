@@ -9,6 +9,7 @@ import { MenuComponent } from './menu/menu.component';
 import { GameBlitzComponent } from './game-blitz/game-blitz.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SecondsToMinutesPipe } from './pipes/seconds-to-minutes-pipe.pipe';
+import { PercentagePipe } from './pipes/percentage.pipe';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { SecondsToMinutesPipe } from './pipes/seconds-to-minutes-pipe.pipe';
     GameboardComponent,
     MenuComponent,
     GameBlitzComponent,
-    SecondsToMinutesPipe 
+    SecondsToMinutesPipe,
+    PercentagePipe 
   ],
   imports: [
     BrowserModule,
