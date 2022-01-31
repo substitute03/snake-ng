@@ -4,6 +4,7 @@ import { GameState } from 'src/domain/enums';
 import { GameboardComponent } from '../gameboard/gameboard.component';
 import { timer, Subscription } from 'rxjs';
 import { SecondsToMinutesPipe } from '../pipes/seconds-to-minutes-pipe.pipe';
+import * as utils from 'src/app/utils'
 
 @Component({
   selector: 'sng-game-blitz',
@@ -14,7 +15,7 @@ export class GameBlitzComponent {
   @ViewChild('gameboard') gameboard?: GameboardComponent;
 
   private stopwatchSubscription = new Subscription();
-  private readonly timeLimit: number = 120;
+  private readonly timeLimit: number = 60;
   private timeleft: number = this.timeLimit;
   public score: number = 0;
   public message: string = "";
@@ -46,7 +47,7 @@ export class GameBlitzComponent {
 
       await this.gameboard!.moveSnake(nextDirection);
       this.score = this.gameboard!.snake.countPelletsConsumed;
-      await sleep(80);   
+      await utils.sleep(80);   
     } while(!this.gameboard!.snake.isOutOfBounds &&
             !this.gameboard!.snake.hasCollidedWithSelf &&
              this.timeleft != 0);
@@ -63,10 +64,10 @@ export class GameBlitzComponent {
   }
 
   private async playCountdown(): Promise<void>{
-    this.message = "3"; await sleep(850);
-    this.message = "2"; await sleep(850);
-    this.message = "1"; await sleep(850);
-    this.message = "Go!"; await sleep(850);
+    this.message = "3"; await utils.sleep(850);
+    this.message = "2"; await utils.sleep(850);
+    this.message = "1"; await utils.sleep(850);
+    this.message = "Go!"; await utils.sleep(850);
     this.message = "";
   }
 
@@ -75,7 +76,7 @@ export class GameBlitzComponent {
 
     this.stopwatchSubscription = stopwatch.subscribe(secondsPassed => { 
       this.timeleft = this.timeLimit - secondsPassed;
-      this.message = secondsToMinutes(this.timeleft);
+      this.message = utils.secondsToMinutes(this.timeleft);
       this.changeDetector.detectChanges();
     });
   }
@@ -119,15 +120,4 @@ export class GameBlitzComponent {
 
      this.storedKeyPresses.push(key);
   }
-}
-
-function sleep(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-function secondsToMinutes(seconds: number): string{
-  let minutesLeft: number = Math.floor(+seconds / 60);
-  let secondsLeft: number = +seconds % 60;
-
-  return `${minutesLeft}:${secondsLeft >= 10 ? secondsLeft : "0" + secondsLeft}`;
 }

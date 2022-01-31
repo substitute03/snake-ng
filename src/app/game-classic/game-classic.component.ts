@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild } from '@
 import { Direction } from 'src/domain/direction';
 import { GameState } from 'src/domain/enums';
 import { GameboardComponent } from '../gameboard/gameboard.component';
+import * as utils from 'src/app/utils'
 
 @Component({
   selector: 'sng-game',
@@ -40,7 +41,7 @@ export class GameClassicComponent {
 
       await this.gameboard!.moveSnake(nextDirection);
       this.score = this.gameboard!.snake.countPelletsConsumed;
-      await sleep(80);   
+      await utils.sleep(80);   
     } while(!this.gameboard!.snake.isOutOfBounds &&
             !this.gameboard!.snake.hasCollidedWithSelf);
     
@@ -55,10 +56,10 @@ export class GameClassicComponent {
   }
 
   private async playCountdown(): Promise<void>{
-    this.message = "3"; await sleep(850);
-    this.message = "2"; await sleep(850);
-    this.message = "1"; await sleep(850);
-    this.message = "Go!"; await sleep(850);
+    this.message = "3"; await utils.sleep(850);
+    this.message = "2"; await utils.sleep(850);
+    this.message = "1"; await utils.sleep(850);
+    this.message = "Go!"; await utils.sleep(850);
     this.message = "";
   }
 
@@ -101,8 +102,4 @@ export class GameClassicComponent {
 
      this.storedKeyPresses.push(key);
   }
-}
-
-function sleep(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
 }
