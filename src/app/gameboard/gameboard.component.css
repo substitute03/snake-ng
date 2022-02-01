@@ -13,6 +13,9 @@
         .gameboard > .cell.snake {
             background-color: green;
         }
+        .gameboard > .cell.blazing {
+            background-color: orange;
+        }
         .gameboard > .cell.empty {
             background-color: white;
         }

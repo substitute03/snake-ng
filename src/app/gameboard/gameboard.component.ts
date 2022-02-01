@@ -86,7 +86,7 @@ export class GameboardComponent {
     }
     
     this.snake.cells.unshift(moveToCell);
-    this.snake.head.cellType = CellType.Snake;
+    this.snake.head.cellType = this.snake.isBlazing ? CellType.Blazing : CellType.Snake;
   }
 
   private getAdjacentCell(direction: Direction, {x, y}: Cell): Cell | null{

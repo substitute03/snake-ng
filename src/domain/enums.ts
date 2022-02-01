@@ -8,7 +8,8 @@ export enum GameState{
 export enum CellType {
     Empty = "empty",
     Pellet = "pellet",
-    Snake = "snake"
+    Snake = "snake",
+    Blazing = "blazing"
 }
 
 export enum GameMode{

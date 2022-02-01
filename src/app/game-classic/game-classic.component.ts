@@ -58,9 +58,8 @@ export class GameClassicComponent {
   private async playCountdown(): Promise<void>{
     for (let i: number = 4; i >= 0; i--){
       this.message = i > 1 ? (i-1).toString() : i === 1 ? "Go!" : "";
-      if (i > 0){
-        await utils.sleep(700);
-      }
+      
+      if (i > 0) await utils.sleep(700);
     }
   }
 

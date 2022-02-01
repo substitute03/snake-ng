@@ -1,0 +1,4 @@
+/*Overwrite Bootstrap progress bar animation to make the transition faster.*/
+.progress-bar-fast {
+    transition: width .02s ease !important;
+}

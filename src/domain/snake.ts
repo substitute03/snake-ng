@@ -1,5 +1,6 @@
 import { Cell } from "./cell";
 import { Direction } from "./direction";
+import { CellType } from "./enums";
 
 export class Snake{
     public cells: Cell[] = [];
@@ -34,5 +35,18 @@ export class Snake{
         }
     }
 
-    public isBlazing: boolean = false;
+    private _isBlazing: boolean = false;
+    get isBlazing(): boolean {
+        return this._isBlazing;
+    }
+    set isBlazing(value: boolean){
+        this._isBlazing = value;
+
+        if (this.isBlazing){
+            this.cells.forEach(cell => cell.cellType = CellType.Blazing)
+        }
+        else if (!this.isBlazing){
+            this.cells.forEach(cell => cell.cellType = CellType.Snake)
+        }
+    }
 }
