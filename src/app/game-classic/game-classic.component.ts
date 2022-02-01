@@ -25,12 +25,7 @@ export class GameClassicComponent {
   constructor(private changeDetector: ChangeDetectorRef) {}
   
   public async startGameLoop(): Promise<void>{
-    this. gameState = GameState.Setup;
-    this.reset();
-    this.gameboard!.spawnSnake();
-    this.gameboard!.spawnPellet();   
-    await this.playCountdown();
-    this.gameState = GameState.InProgress;
+    await this.prepareGame();
 
     do{
       let nextDirection: Direction = Direction.fromKey(this.storedKeyPresses[0])
@@ -44,9 +39,8 @@ export class GameClassicComponent {
       await utils.sleep(80);   
     } while(!this.gameboard!.snake.isOutOfBounds &&
             !this.gameboard!.snake.hasCollidedWithSelf);
-    
-    this.gameState = GameState.GameOver;
-    this.message = "Game over!";
+      
+    this.handleGameOver();
   }
 
   public reset(): void{
@@ -65,6 +59,20 @@ export class GameClassicComponent {
 
   public handlePelletConsumed(): void{
     this.gameboard?.spawnPellet();
+  }
+
+  private async prepareGame(): Promise<void>{
+    this. gameState = GameState.Setup;
+    this.reset();
+    this.gameboard!.spawnSnake();
+    this.gameboard!.spawnPellet();   
+    await this.playCountdown();
+    this.gameState = GameState.InProgress;
+  }
+
+  private handleGameOver(): void{
+    this.gameState = GameState.GameOver;
+    this.message = "Game over!";
   }
 
   @HostListener('document:keydown', ['$event'])
