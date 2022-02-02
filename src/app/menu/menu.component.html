@@ -3,13 +3,14 @@
         <img class="img-fluid" style="width:90px" src="/assets/images/angular.svg">SnakeNg
     </h1>
     
-    <div class="row col-2 offset-5 p-0 mb-3">
-        <label for="gameModes" class="form-label h5">Game Mode</label>
-        <select [(ngModel)]="selectedGameMode" class="form-select" aria-label="game modes">
-            <option value="" disabled selected>Select...</option>
-            <option *ngFor="let mode of gameModes">{{mode}}</option>
-        </select>
-    </div>
+    <form [formGroup]="gameOptionsForm">
+        <div class="row col-2 offset-5 p-0 mb-3">
+            <label for="gameModes" class="form-label h5">Game Mode</label>
+                <select formControlName="gameMode" class="form-select" aria-label="game modes">
+                    <option *ngFor="let mode of gameModes">{{mode}}</option>
+                </select>
+        </div>
+    </form>
 
     <button type="submit" (click)="handlePlayClicked()" class="btn btn-danger row col-2 offset-5">Play</button>
 </div>

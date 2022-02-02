@@ -1,6 +1,7 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GameMode } from 'src/domain/enums';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'sng-menu',
@@ -10,8 +11,12 @@ import { GameMode } from 'src/domain/enums';
 export class MenuComponent implements OnInit {
   @HostBinding('class') classes = 'row col-lg-12 align-items-center vh-100';
 
-  public selectedGameMode: string = "";
   public gameModes: string[] = [];
+
+  gameOptionsForm = new FormGroup({
+    gameMode : new FormControl(GameMode.Classic),
+    asd: new FormControl(10)
+  });
 
   constructor(private _router: Router) {}
 
@@ -22,8 +27,8 @@ export class MenuComponent implements OnInit {
   }
 
   public handlePlayClicked(): void{
-    let selectedGameMode: GameMode = <GameMode>this.selectedGameMode;
-
+    let selectedGameMode: GameMode = this.gameOptionsForm.get("gameMode")?.value;
+    
     this._router.navigate([`${selectedGameMode.toLowerCase()}`])
   }
 }

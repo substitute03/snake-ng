@@ -76,7 +76,8 @@ export class GameboardComponent {
         this.snake.tail.cellType = CellType.Empty;
         this.snake.cells.pop();
         break;
-      case CellType.Snake || CellType.Blazing:
+      case CellType.Snake:
+      case CellType.Blazing:
         this.snake.hasCollidedWithSelf = true;
         break;
       case CellType.Pellet:
