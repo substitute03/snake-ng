@@ -42,7 +42,7 @@ export class GameBlitzComponent {
 
       await this.gameboard!.moveSnake(nextDirection);
       this.score = this.gameboard!.snake.countPelletsConsumed;
-      await utils.sleep(80);   
+      await utils.sleep(75);   
     } while(!this.gameboard!.snake.isOutOfBounds &&
             !this.gameboard!.snake.hasCollidedWithSelf &&
              this.timeleft != 0);
