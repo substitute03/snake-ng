@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, HostListener, ViewChild } from '@angular/core';
 import { Direction } from 'src/domain/direction';
-import { CellType, GameState } from 'src/domain/enums';
+import { CellType, EventType, GameState } from 'src/domain/enums';
 import { GameboardComponent } from '../gameboard/gameboard.component';
 import { timer, Subscription } from 'rxjs';
 import * as utils from 'src/app/utils'
@@ -59,10 +59,20 @@ export class GameBlitzComponent {
   }
 
   private async playCountdown(): Promise<void>{
-    for (let i: number = 4; i >= 0; i--){
-      this.message = i > 1 ? (i-1).toString() : i === 1 ? "Go!" : "";
-      
-      if (i > 0) await utils.sleep(700);
+    for (let i: number = 4; i >= 0; i--){     
+      if(i > 1){
+        this.message = `${i - 1}`;
+        utils.playSound(EventType.CountdownInProgress);
+        await utils.sleep(700);
+      }
+      else if(i === 1){
+        this.message = "Go!";
+        utils.playSound(EventType.CountdownEnd);
+        await utils.sleep(700);
+      }
+      else{
+        this.message = "";
+      }
     }
   }
 
@@ -76,14 +86,14 @@ export class GameBlitzComponent {
   }
 
   public handlePelletConsumed(): void{
+    utils.playSound(EventType.PelletConsumed);
     this.gameboard?.spawnPellet();
 
     if (!this.gameboard!.snake.isBlazing){
       if (this.blazingCounter < 5){
         this.blazingCounter++;
         this.progressBarPercentage = 20 * this.blazingCounter;
-      }
-      
+      }     
       if (this.blazingCounter === 5){
         this.gameboard!.snake.isBlazing = true;
         this.handleBlazing();
@@ -119,13 +129,22 @@ export class GameBlitzComponent {
 
   private handleGameOver(): void{
     this.stopwatchSubscription.unsubscribe();
-    this.gameState = GameState.GameOver;
-    this.message = "Game over!";
+    utils.playSound(EventType.GameOver);
+    this.gameState = this.timeleft === 0 ? GameState.TimeUp: GameState.GameOver;
+
+    switch (this.gameState){
+      case GameState.TimeUp:
+        this.message = "Time's up!";
+        break;
+        case GameState.GameOver:
+          this.message = "Game over!";
+    }
 
     if (this.gameboard!.snake.isBlazing){
       this.gameboard!.snake.isBlazing = false;
-      this.progressBarPercentage = 0;
     }
+
+    this.progressBarPercentage = 0;
   }
 
   @HostListener('document:keydown', ['$event'])

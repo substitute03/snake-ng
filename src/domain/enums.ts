@@ -2,6 +2,7 @@ export enum GameState{
     PreGame,
     Setup,
     InProgress,
+    TimeUp,
     GameOver
 }
 
@@ -15,4 +16,12 @@ export enum CellType {
 export enum GameMode{
     Classic = "Classic",
     Blitz = "Blitz"
+}
+
+export enum EventType{
+    PelletConsumed,
+    CountdownInProgress,
+    CountdownEnd,
+    GameOver,
+    Error
 }

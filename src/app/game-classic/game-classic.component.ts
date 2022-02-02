@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Direction } from 'src/domain/direction';
-import { GameState } from 'src/domain/enums';
+import { EventType, GameState } from 'src/domain/enums';
 import { GameboardComponent } from '../gameboard/gameboard.component';
 import * as utils from 'src/app/utils'
 
@@ -50,14 +50,25 @@ export class GameClassicComponent {
   }
 
   private async playCountdown(): Promise<void>{
-    for (let i: number = 4; i >= 0; i--){
-      this.message = i > 1 ? (i-1).toString() : i === 1 ? "Go!" : "";
-      
-      if (i > 0) await utils.sleep(700);
+    for (let i: number = 4; i >= 0; i--){     
+      if(i > 1){
+        this.message = `${i - 1}`;
+        utils.playSound(EventType.CountdownInProgress);
+        await utils.sleep(700);
+      }
+      else if(i === 1){
+        this.message = "Go!";
+        utils.playSound(EventType.CountdownEnd);
+        await utils.sleep(700);
+      }
+      else{
+        this.message = "";
+      }
     }
   }
 
   public handlePelletConsumed(): void{
+    utils.playSound(EventType.PelletConsumed);
     this.gameboard?.spawnPellet();
   }
 
@@ -71,8 +82,8 @@ export class GameClassicComponent {
   }
 
   private handleGameOver(): void{
+    utils.playSound(EventType.GameOver);
     this.gameState = GameState.GameOver;
-    this.message = "Game over!";
   }
 
   @HostListener('document:keydown', ['$event'])
