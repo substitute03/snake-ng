@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, HostListener, ViewChild } from '@angular/core';
 import { Direction } from 'src/domain/direction';
-import { CellType, EventType, GameState } from 'src/domain/enums';
+import { EventType, GameState } from 'src/domain/enums';
 import { GameboardComponent } from '../gameboard/gameboard.component';
 import { timer, Subscription } from 'rxjs';
 import * as utils from 'src/app/utils'
@@ -23,9 +23,10 @@ export class GameBlitzComponent {
   public progressBarPercentage: number = 0;
   private blazingCounter: number = 0;
   
-  public get isPreGameOrGameOver(): boolean{
+  public get isPreGameOrPostGame(): boolean{
     return this.gameState === GameState.PreGame ||
-           this.gameState === GameState.GameOver;
+           this.gameState === GameState.GameOver ||
+           this.gameState === GameState.TimeUp;
   }
 
   constructor(private changeDetector: ChangeDetectorRef) {}

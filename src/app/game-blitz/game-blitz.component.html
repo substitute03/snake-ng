@@ -13,7 +13,7 @@
 </div>
 <div class="row col-12 mb-2 justify-content-center" style="min-width: 750px;">
     <div class="progress p-0" style="width: 750px">
-        <div [class.progress-bar-fast]="!isPreGameOrGameOver" class="progress-bar bg-danger progres-bar-fast" role="progressbar" [ngStyle]="{'width': progressBarPercentage | percentage}" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        <div [class.progress-bar-fast]="!isPreGameOrPostGame" class="progress-bar bg-danger progres-bar-fast" role="progressbar" [ngStyle]="{'width': progressBarPercentage | percentage}" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
 </div>
 <div class="row col-12 text-center">
@@ -24,7 +24,7 @@
         <h3>{{message}}</h3>
     </div>
 </div>
-<div *ngIf="isPreGameOrGameOver === true" class="mt-4">
+<div *ngIf="isPreGameOrPostGame === true" class="mt-4">
     <div class="row text-center">
         <div class="col-4 offset-4">
             <button type="button" class="btn btn-danger btn-lg btn-block" (click)="startGameLoop()">Play</button>
