@@ -1,5 +1,5 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GameMode } from 'src/domain/enums';
 import { FormControl, FormGroup } from '@angular/forms';
 
@@ -15,12 +15,16 @@ export class MenuComponent implements OnInit {
 
   gameOptionsForm = new FormGroup({
     gameMode : new FormControl(GameMode.Classic),
-    asd: new FormControl(10)
+    playerName: new FormControl()
   });
 
-  constructor(private _router: Router) {}
+  constructor(private _route: ActivatedRoute, private _router: Router) {}
 
   ngOnInit(): void {
+    this._route.queryParams.subscribe(params => {
+        this.gameOptionsForm.patchValue({ playerName: params["name"] });
+    })
+
     for (let mode in GameMode){
       this.gameModes.push(mode);
     }
@@ -28,7 +32,15 @@ export class MenuComponent implements OnInit {
 
   public handlePlayClicked(): void{
     let selectedGameMode: GameMode = this.gameOptionsForm.get("gameMode")?.value;
+    let playerName: string = this.gameOptionsForm.get("playerName")?.value;
     
-    this._router.navigate([`${selectedGameMode.toLowerCase()}`])
+    this._router.navigate(
+        [`${selectedGameMode.toLowerCase()}`],
+        {
+            queryParams: 
+            {
+                name: `${playerName}`,
+            }
+        });
   }
 }

@@ -5,10 +5,15 @@
     
     <form [formGroup]="gameOptionsForm">
         <div class="row col-2 offset-5 p-0 mb-3">
+
+            <label for="playerName" class="form-label h5">Name</label>
+            <input formControlName="playerName" class="form-control mb-3" type="text">
+
             <label for="gameModes" class="form-label h5">Game Mode</label>
-                <select formControlName="gameMode" class="form-select" aria-label="game modes">
-                    <option *ngFor="let mode of gameModes">{{mode}}</option>
-                </select>
+            <select formControlName="gameMode" class="form-select form-control" aria-label="game modes">
+                <option *ngFor="let mode of gameModes">{{mode}}</option>
+            </select>
+
         </div>
     </form>
 

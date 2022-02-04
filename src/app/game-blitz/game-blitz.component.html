@@ -1,6 +1,6 @@
 <div class="row col-lg-12 text-center">
     <div class="row col-lg-12">
-        <h1 class="mb-2">    
+        <h1 class="mb-2">
             <img class="img-fluid" style="width:90px" src="/assets/images/angular.svg">SnakeNg
         </h1>
     </div>
@@ -13,7 +13,13 @@
 </div>
 <div class="row col-12 mb-2 justify-content-center" style="min-width: 750px;">
     <div class="progress p-0" style="width: 750px">
-        <div [class.progress-bar-fast]="!isPreGameOrPostGame" class="progress-bar bg-danger progres-bar-fast" role="progressbar" [ngStyle]="{'width': progressBarPercentage | percentage}" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        <div [class.progress-bar-fast]="!isPreGameOrPostGame"
+             [ngStyle]="{'width': progressBarPercentage | percentage}"
+             class="progress-bar bg-danger progres-bar-fast"
+             role="progressbar"
+             aria-valuenow="0"
+             aria-valuemin="0" aria-valuemax="100">
+        </div>
     </div>
 </div>
 <div class="row col-12 text-center">
@@ -32,7 +38,7 @@
     </div>
     <div class="row text-center mt-3">
         <div class="col-4 offset-4">
-            <a class="btn btn-outline-danger btn-lg" routerLink="/">Main Menu</a>
+            <a class="btn btn-outline-danger btn-lg" (click)="returnToMenu()">Main Menu</a>
         </div>
     </div>
 </div>

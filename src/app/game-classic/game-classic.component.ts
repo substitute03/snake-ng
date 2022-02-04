@@ -3,15 +3,17 @@ import { Direction } from 'src/domain/direction';
 import { EventType, GameState } from 'src/domain/enums';
 import { GameboardComponent } from '../gameboard/gameboard.component';
 import * as utils from 'src/app/utils'
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'sng-game',
   templateUrl: './game-classic.component.html',
   styleUrls: ['./game-classic.component.css']
 })
-export class GameClassicComponent {
+export class GameClassicComponent implements OnInit{
   @ViewChild('gameboard') gameboard?: GameboardComponent;
 
+  public playerName: string = "";
   public score: number = 0;
   public message: string = "";
   public gameState: GameState = GameState.PreGame;
@@ -22,7 +24,13 @@ export class GameClassicComponent {
            this.gameState === GameState.GameOver;
   }
 
-  constructor(private changeDetector: ChangeDetectorRef) {}
+  constructor(private _route: ActivatedRoute, private _router: Router) {}
+
+  ngOnInit(){
+    this._route.queryParams.subscribe(params => {
+        this.playerName = params["name"];
+    })
+  }
   
   public async startGameLoop(): Promise<void>{
     await this.prepareGame();
@@ -84,6 +92,13 @@ export class GameClassicComponent {
   private handleGameOver(): void{
     utils.playSound(EventType.GameOver);
     this.gameState = GameState.GameOver;
+  }
+
+  public returnToMenu(): void{
+    this._router.navigate(
+        [``],
+        {queryParams: {name: `${this.playerName}` }}
+    );
   }
 
   @HostListener('document:keydown', ['$event'])

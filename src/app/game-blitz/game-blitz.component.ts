@@ -4,6 +4,7 @@ import { EventType, GameState } from 'src/domain/enums';
 import { GameboardComponent } from '../gameboard/gameboard.component';
 import { timer, Subscription } from 'rxjs';
 import * as utils from 'src/app/utils'
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'sng-game-blitz',
@@ -13,6 +14,7 @@ import * as utils from 'src/app/utils'
 export class GameBlitzComponent {
   @ViewChild('gameboard') gameboard?: GameboardComponent ;
 
+  public playerName: string = "";
   private stopwatchSubscription = new Subscription();
   private readonly timeLimit: number = 60;
   private timeleft: number = this.timeLimit;
@@ -29,7 +31,13 @@ export class GameBlitzComponent {
            this.gameState === GameState.TimeUp;
   }
 
-  constructor(private changeDetector: ChangeDetectorRef) {}
+  constructor(private _route: ActivatedRoute, private _router: Router) {}
+
+  ngOnInit(){
+    this._route.queryParams.subscribe(params => {
+        this.playerName = params["name"];
+    })
+  }
   
   public async startGameLoop(): Promise<void>{
     await this.prepareGame();
@@ -146,6 +154,13 @@ export class GameBlitzComponent {
     }
 
     this.progressBarPercentage = 0;
+  }
+
+  public returnToMenu(): void{
+    this._router.navigate(
+        [``],
+        {queryParams: {name: `${this.playerName}` }}
+    );
   }
 
   @HostListener('document:keydown', ['$event'])

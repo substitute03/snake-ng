@@ -10,6 +10,7 @@ import { GameBlitzComponent } from './game-blitz/game-blitz.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SecondsToMinutesPipe } from './pipes/seconds-to-minutes-pipe.pipe';
 import { PercentagePipe } from './pipes/percentage.pipe';
+import { StorageService } from './shared/storage-service';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,10 @@ import { PercentagePipe } from './pipes/percentage.pipe';
       { path: '**', component: MenuComponent } // wildcard path if the path doesn't match anything
     ])
   ],
-  providers: [SecondsToMinutesPipe],
+  providers: [
+    SecondsToMinutesPipe,
+    StorageService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
