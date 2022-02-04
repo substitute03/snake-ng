@@ -1,7 +1,7 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GameMode } from 'src/domain/enums';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'sng-menu',
@@ -15,8 +15,13 @@ export class MenuComponent implements OnInit {
 
   gameOptionsForm = new FormGroup({
     gameMode : new FormControl(GameMode.Classic),
-    playerName: new FormControl()
+    playerName: new FormControl("", 
+    [
+        Validators.required, Validators.minLength(3)
+    ])
   });
+
+  public get playerName() { return this.gameOptionsForm.get("playerName") }
 
   constructor(private _route: ActivatedRoute, private _router: Router) {}
 
@@ -31,6 +36,11 @@ export class MenuComponent implements OnInit {
   }
 
   public handlePlayClicked(): void{
+    if (this.gameOptionsForm.invalid){
+        this.gameOptionsForm.markAllAsTouched(); // Mark as dirty to display validation if it is not already shown.
+        return;
+    }
+
     let selectedGameMode: GameMode = this.gameOptionsForm.get("gameMode")?.value;
     let playerName: string = this.gameOptionsForm.get("playerName")?.value;
     

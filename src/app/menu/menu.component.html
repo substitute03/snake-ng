@@ -7,7 +7,8 @@
         <div class="row col-2 offset-5 p-0 mb-3">
 
             <label for="playerName" class="form-label h5">Name</label>
-            <input formControlName="playerName" class="form-control mb-3" type="text">
+            <input id="playerName" formControlName="playerName" class="form-control mb-3" type="text">
+            <p class="text-danger" *ngIf="playerName!.invalid && (playerName!.dirty || playerName!.touched)" >Name must contain at least 3 characters.</p>
 
             <label for="gameModes" class="form-label h5">Game Mode</label>
             <select formControlName="gameMode" class="form-select form-control" aria-label="game modes">

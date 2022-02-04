@@ -1,9 +1,10 @@
 import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Direction } from 'src/domain/direction';
-import { EventType, GameState } from 'src/domain/enums';
+import { EventType, GameMode, GameState } from 'src/domain/enums';
 import { GameboardComponent } from '../gameboard/gameboard.component';
 import * as utils from 'src/app/utils'
 import { ActivatedRoute, Router } from '@angular/router';
+import { StorageService } from '../shared/storage-service';
 
 @Component({
   selector: 'sng-game',
@@ -13,6 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class GameClassicComponent implements OnInit{
   @ViewChild('gameboard') gameboard?: GameboardComponent;
 
+  private gameMode: GameMode = GameMode.Classic;
   public playerName: string = "";
   public score: number = 0;
   public message: string = "";
@@ -24,7 +26,7 @@ export class GameClassicComponent implements OnInit{
            this.gameState === GameState.GameOver;
   }
 
-  constructor(private _route: ActivatedRoute, private _router: Router) {}
+  constructor(private _route: ActivatedRoute, private _router: Router, private _storageService: StorageService) {}
 
   ngOnInit(){
     this._route.queryParams.subscribe(params => {
@@ -92,6 +94,16 @@ export class GameClassicComponent implements OnInit{
   private handleGameOver(): void{
     utils.playSound(EventType.GameOver);
     this.gameState = GameState.GameOver;
+    this.checkHighScore();    
+  }
+
+  private checkHighScore(): void{
+    let currentHighScore = this._storageService.getHighScore(this.playerName, this.gameMode);
+
+    if (currentHighScore == null || this.score > currentHighScore.score){
+        this._storageService.addHighScore(this.playerName, this.gameMode, this.score);
+        this.message = `New high score! Was ${currentHighScore} now ${this.score}`
+    }
   }
 
   public returnToMenu(): void{

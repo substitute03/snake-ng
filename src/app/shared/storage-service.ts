@@ -5,7 +5,7 @@ import { HighScore } from 'src/domain/highScore';
 @Injectable()
 export class StorageService {
     public getHighScore(playerName: string, gameMode: GameMode): HighScore | null {
-        let highScoreOrNull: string | null = localStorage.getItem(playerName);
+        let highScoreOrNull: string | null = localStorage.getItem(`${playerName}_${gameMode}`);
 
         if (highScoreOrNull) {
             return JSON.parse(highScoreOrNull) as HighScore;
