@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SecondsToMinutesPipe } from './pipes/seconds-to-minutes-pipe.pipe';
 import { PercentagePipe } from './pipes/percentage.pipe';
 import { StorageService } from './shared/storage-service';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { StorageService } from './shared/storage-service';
     MenuComponent,
     GameBlitzComponent,
     SecondsToMinutesPipe,
-    PercentagePipe 
+    PercentagePipe,
+    ModalComponent 
   ],
   imports: [
     BrowserModule,
