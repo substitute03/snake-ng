@@ -35,9 +35,14 @@ export class GameClassicComponent implements OnInit {
         private _storageService: StorageService) {}
 
     ngOnInit() {
-        this._route.queryParams.subscribe((params) => {
-            this.playerName = params['name'];
-        });
+        let playerName = this._storageService.getPlayerName();
+
+        if (playerName){
+            this.playerName = playerName;
+        }
+        else{
+            this.returnToMenu();
+        }
     }
 
     public async startGameLoop(): Promise<void> {
@@ -123,9 +128,7 @@ export class GameClassicComponent implements OnInit {
     }
 
     public returnToMenu(): void {
-        this._router.navigate([``], {
-            queryParams: { name: `${this.playerName}` },
-        });
+        this._router.navigate([""]);
     }
 
     @HostListener('document:keydown', ['$event'])

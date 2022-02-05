@@ -39,11 +39,16 @@ export class GameBlitzComponent {
         private _router: Router,
         private _storageService: StorageService) { }
 
-    ngOnInit() {
-        this._route.queryParams.subscribe(params => {
-            this.playerName = params["name"];
-        })
-    }
+        ngOnInit() {
+            let playerName = this._storageService.getPlayerName();
+    
+            if (playerName){
+                this.playerName = playerName;
+            }
+            else{
+                this.returnToMenu();
+            }
+        }
 
     public async startGameLoop(): Promise<void> {
         await this.prepareGame();
@@ -181,10 +186,7 @@ export class GameBlitzComponent {
     }
 
     public returnToMenu(): void {
-        this._router.navigate(
-            [``],
-            { queryParams: { name: `${this.playerName}` } }
-        );
+        this._router.navigate([``]);
     }
 
     @HostListener('document:keydown', ['$event'])

@@ -70,4 +70,12 @@ export class StorageService {
 
         return highScores;
     }
+
+    public setPlayerName(name: string){
+        localStorage.setItem("playerName", name);
+    }
+
+    public getPlayerName(){
+        return localStorage.getItem("playerName");
+    }
 }
