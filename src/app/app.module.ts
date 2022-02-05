@@ -13,6 +13,7 @@ import { PercentagePipe } from './pipes/percentage.pipe';
 import { StorageService } from './shared/storage-service';
 import { ModalComponent } from './modal/modal.component';
 import { HighScoreComponent } from './high-score/high-score.component';
+import { KeypressService } from './shared/keypress-service';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { HighScoreComponent } from './high-score/high-score.component';
   ],
   providers: [
     SecondsToMinutesPipe,
-    StorageService
+    StorageService,
+    KeypressService
   ],
   bootstrap: [AppComponent]
 })

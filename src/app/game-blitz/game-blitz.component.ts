@@ -1,12 +1,13 @@
-import { ChangeDetectorRef, Component, HostListener, ViewChild } from '@angular/core';
+import { Component, HostListener, ViewChild } from '@angular/core';
 import { Direction } from 'src/domain/direction';
 import { EventType, GameMode, GameState } from 'src/domain/enums';
 import { GameboardComponent } from '../gameboard/gameboard.component';
 import { timer, Subscription } from 'rxjs';
 import * as utils from 'src/app/utils'
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { StorageService } from '../shared/storage-service';
 import { ModalComponent } from '../modal/modal.component';
+import { KeypressService } from '../shared/keypress-service';
 
 @Component({
     selector: 'sng-game-blitz',
@@ -25,7 +26,6 @@ export class GameBlitzComponent {
     public score: number = 0;
     public message: string = "";
     public gameState: GameState = GameState.PreGame;
-    private storedKeyPresses: string[] = [];
     public progressBarPercentage: number = 0;
     private blazingCounter: number = 0;
 
@@ -35,9 +35,9 @@ export class GameBlitzComponent {
             this.gameState === GameState.TimeUp;
     }
 
-    constructor(private _route: ActivatedRoute,
-        private _router: Router,
-        private _storageService: StorageService) { }
+    constructor(private _router: Router,
+        private _storageService: StorageService,
+        private _keypressService: KeypressService) { }
 
         ngOnInit() {
             let playerName = this._storageService.getPlayerName();
@@ -54,28 +54,23 @@ export class GameBlitzComponent {
         await this.prepareGame();
 
         do {
-            let nextDirection: Direction = Direction.fromKey(this.storedKeyPresses[0])
-
-            if (this.storedKeyPresses.length > 0) {
-                this.storedKeyPresses.shift();
-            }
-
+            let nextDirection: Direction = this._keypressService.getNextDirection();
             await this.gameboard!.moveSnake(nextDirection);
             this.score = this.gameboard!.snake.countPelletsConsumed;
-            await utils.sleep(75);
+            await utils.sleep(90);
         } while (!this.gameboard!.snake.isOutOfBounds &&
-        !this.gameboard!.snake.hasCollidedWithSelf &&
+            !this.gameboard!.snake.hasCollidedWithSelf &&
             this.timeleft != 0);
 
         this.handleGameOver();
     }
 
     public reset(): void {
+        this._keypressService.clearDirectionQueue();
         this.progressBarPercentage = 0;
         this.blazingCounter = 0;
         this.gameboard!.reset();
         this.score = 0;
-        this.storedKeyPresses = [];
     }
 
     private async playCountdown(): Promise<void> {
@@ -191,37 +186,11 @@ export class GameBlitzComponent {
 
     @HostListener('document:keydown', ['$event'])
     public handleKeyboardEvent(event: KeyboardEvent) {
-        let key: string = event.key;
-
         if (this.gameState != GameState.InProgress) {
             return;
         }
 
-        let directionToMove: Direction = Direction.fromKey(key);
-
-        if (directionToMove === Direction.none) {
-            return;
-        }
-
-        let nextDirection: Direction = Direction.fromKey(this.storedKeyPresses[0]);
-
-        if (this.storedKeyPresses.length === 0) {
-            if (this.gameboard!.snake.currentDirection.isEqualTo(directionToMove) ||
-                this.gameboard!.snake.currentDirection.isOppositeTo(directionToMove)) {
-                return;
-            }
-        }
-        else if (this.storedKeyPresses.length > 0) {
-            if (nextDirection.isEqualTo(directionToMove) ||
-                nextDirection.isOppositeTo(directionToMove)) {
-                return;
-            }
-        }
-
-        if (this.storedKeyPresses.length === 2) {
-            this.storedKeyPresses.shift();
-        }
-
-        this.storedKeyPresses.push(key);
+        this._keypressService.setNextDirection(Direction.fromKey(event.key),
+             this.gameboard!.snake.currentDirection);
     }
 }

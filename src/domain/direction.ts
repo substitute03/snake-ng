@@ -3,10 +3,10 @@ export class Direction{
     private keys: string[];
     public value: string;
 
-    public static readonly up = new Direction(1, ["w", "ArrowUp"], "Up");
-    public static readonly down = new Direction(2, ["s", "ArrowDown"], "Down");
-    public static readonly left = new Direction(3, ["a", "ArrowLeft"], "Left");
-    public static readonly right = new Direction(4, ["d", "ArrowRight"], "Right");
+    public static readonly up = new Direction(10, ["w", "ArrowUp"], "Up");
+    public static readonly down = new Direction(20, ["s", "ArrowDown"], "Down");
+    public static readonly left = new Direction(30, ["a", "ArrowLeft"], "Left");
+    public static readonly right = new Direction(40, ["d", "ArrowRight"], "Right");
     public static readonly none = new Direction(0, [], "None");
     public static readonly all : Direction[] = [this.up, this.down, this.left, this.right];
 
@@ -23,11 +23,15 @@ export class Direction{
 
         let sumOfIds: number = this.id + direction.id;
 
-        return sumOfIds === 3 || sumOfIds === 7;
+        return sumOfIds === 30 || sumOfIds === 70;
     }
 
     public isEqualTo(direction: Direction): boolean{
         return this.id === direction.id;
+    }
+
+    public isOppositeOrEqualTo(direction: Direction): boolean{
+        return (this.isOppositeTo(direction) || this.isEqualTo(direction))
     }
 
     public isNotEqualTo(direction: Direction): boolean{
