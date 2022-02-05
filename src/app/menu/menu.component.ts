@@ -10,7 +10,7 @@ import { StorageService } from '../shared/storage-service';
     styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent implements OnInit {
-    @HostBinding('class') classes = 'row col-lg-12 align-items-center vh-100';
+    @HostBinding('class') classes = 'row col-lg-12 align-items-center gx-0 vh-100';
 
     public gameModes: string[] = [];
 
