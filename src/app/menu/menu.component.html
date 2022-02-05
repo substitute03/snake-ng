@@ -1,35 +1,35 @@
-<div class="row col-12 text-center mb-5">
-    <h1 class="mb-2">    
-        <img class="img-fluid" style="width:90px" src="/assets/images/angular.svg">SnakeNg
-    </h1>
-    <form [formGroup]="gameOptionsForm" class="w-100">
-        <div class="row col-2 offset-5 p-0 mb-3">
-            <label for="playerName" class="form-label h5">Name</label>
-            <input id="playerName" formControlName="playerName" class="form-control mb-3" type="text">
-            <p class="text-danger" *ngIf="playerName!.invalid && (playerName!.dirty || playerName!.touched)" >Name must contain at least 3 characters.</p>
-
-            <label for="gameModes" class="form-label h5">Game Mode</label>
-            <select formControlName="gameMode" class="form-select form-control" aria-label="game modes">
-                <option *ngFor="let mode of gameModes">{{mode}}</option>
-            </select>
+<div class="row text-center vh-100 align-items-center">
+    <div class="col-sm-2 mx-auto" style="min-width: 300px">
+        <div class="vstack gap-4">
+            <span class="display-5">    
+                <img class="img-fluid" style="width:90px" src="/assets/images/angular.svg">SnakeNg
+            </span>
+            <form [formGroup]="gameOptionsForm" class="w-100">
+                <label for="playerName" class="form-label h5">Name</label>
+                <input id="playerName" formControlName="playerName" class="form-control mb-3" type="text">
+                <p class="text-danger" *ngIf="playerName!.invalid && (playerName!.dirty || playerName!.touched)" >Name must contain at least 3 characters.</p>
+    
+                <label for="gameModes" class="form-label h5">Game Mode</label>
+                <select formControlName="gameMode" class="form-select form-control" aria-label="game modes">
+                    <option *ngFor="let mode of gameModes">{{mode}}</option>
+                </select>
+            </form>
+            <button type="submit" (click)="handlePlayClicked()" class="btn btn-danger">
+                <div class="row gx-0">
+                    <div class="col-12 text-center">
+                        Play
+                        <i class="bi bi-chevron-compact-right float-end"></i>
+                    </div>
+                </div>
+            </button>
+            <button type="button" [routerLink]="'/highscores'" class="btn btn-danger">
+                <div class="row gx-0">
+                    <div class="col-12 text-center">
+                        High Scores
+                        <i class="bi bi-chevron-compact-right float-end"></i>
+                    </div>
+                </div>
+            </button>
         </div>
-    </form>
-    <div class="row col-10 offset-1">
-        <button type="submit" (click)="handlePlayClicked()" class="btn btn-danger row col-2 offset-5 mt-5">
-            <div class="row gx-0">
-                <div class="col-12 text-center">
-                    Play
-                    <i class="bi bi-chevron-compact-right float-end"></i>
-                </div>
-            </div>
-        </button>
-        <button type="button" [routerLink]="'/highscores'" class="btn btn-danger row col-2 offset-5 mt-3">
-            <div class="row gx-0">
-                <div class="col-12 text-center">
-                    High Scores
-                    <i class="bi bi-chevron-compact-right float-end"></i>
-                </div>
-            </div>
-        </button>
     </div>
 </div>
