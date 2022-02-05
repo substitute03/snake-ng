@@ -10,6 +10,35 @@
         height: 50px;
         width: 50px;
     }
+
+    @media (max-width: 480px){
+        .gameboard > .cell {
+            border-right: 1px solid #000000;
+            border-bottom: 1px solid #000000;
+            height: 20px;
+            width: 20px;
+        }
+    }
+
+    @media (min-width: 481px) and (max-width: 767px){
+        .gameboard > .cell {
+            border-right: 1px solid #000000;
+            border-bottom: 1px solid #000000;
+            height: 30px;
+            width: 30px;
+        }
+    }
+
+    /* Media Query for Tablets Ipads portrait mode */
+    @media (min-width: 768px) and (max-width: 1024px){
+        .gameboard > .cell {
+            border-right: 1px solid #000000;
+            border-bottom: 1px solid #000000;
+            height: 40px;
+            width: 40px;
+        }
+    }
+
         .gameboard > .cell.snake {
             background-color: green;
         }
