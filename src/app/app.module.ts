@@ -14,6 +14,7 @@ import { StorageService } from './shared/storage-service';
 import { ModalComponent } from './modal/modal.component';
 import { HighScoreComponent } from './high-score/high-score.component';
 import { KeypressService } from './shared/keypress-service';
+import { GameCardComponent } from './game-card/game-card.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { KeypressService } from './shared/keypress-service';
     SecondsToMinutesPipe,
     PercentagePipe,
     ModalComponent,
-    HighScoreComponent 
+    HighScoreComponent,
+    GameCardComponent 
   ],
   imports: [
     BrowserModule,
