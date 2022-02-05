@@ -18,16 +18,18 @@ export class GameBlitzComponent {
     @ViewChild('gameboard') gameboard?: GameboardComponent;
     @ViewChild('highScoreModal') highScoreModal?: ModalComponent;
 
-    public playerName: string = "";
-    private gameMode: GameMode = GameMode.Blitz;
     private stopwatchSubscription = new Subscription();
     private readonly timeLimit: number = 60;
     private timeleft: number = this.timeLimit;
+    private blazingCounter: number = 0;
+
+    public playerName: string = "";
+    public gameMode: GameMode = GameMode.Blitz;
+    public highScore: number = 0;
     public score: number = 0;
     public message: string = "";
     public gameState: GameState = GameState.PreGame;
     public progressBarPercentage: number = 0;
-    private blazingCounter: number = 0;
 
     public get isPreGameOrPostGame(): boolean {
         return this.gameState === GameState.PreGame ||
@@ -41,11 +43,16 @@ export class GameBlitzComponent {
 
         ngOnInit() {
             let playerName = this._storageService.getPlayerName();
-    
-            if (playerName){
+
+            if (playerName) {
                 this.playerName = playerName;
+                let highScore = this._storageService.getHighScore(playerName, this.gameMode);
+    
+                if (highScore) {
+                    this.highScore = highScore.score;
+                }
             }
-            else{
+            else {
                 this.returnToMenu();
             }
         }
@@ -176,6 +183,7 @@ export class GameBlitzComponent {
                 this.score
             );
 
+            this.highScore = this.score;
             this.highScoreModal!.show();
         }
     }

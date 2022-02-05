@@ -17,8 +17,9 @@ export class GameClassicComponent implements OnInit {
     @ViewChild('gameboard') gameboard?: GameboardComponent;
     @ViewChild('highScoreModal') highScoreModal?: ModalComponent;
 
-    private gameMode: GameMode = GameMode.Classic;
+    public gameMode: GameMode = GameMode.Classic;
     public playerName: string = '';
+    public highScore: number = 0;
     public score: number = 0;
     public message: string = '';
     public gameState: GameState = GameState.PreGame;
@@ -32,15 +33,20 @@ export class GameClassicComponent implements OnInit {
 
     constructor(private _keypressService: KeypressService,
         private _router: Router,
-        private _storageService: StorageService) {}
+        private _storageService: StorageService) { }
 
     ngOnInit() {
         let playerName = this._storageService.getPlayerName();
 
-        if (playerName){
+        if (playerName) {
             this.playerName = playerName;
+            let highScore = this._storageService.getHighScore(playerName, this.gameMode);
+
+            if (highScore) {
+                this.highScore = highScore.score;
+            }
         }
-        else{
+        else {
             this.returnToMenu();
         }
     }
@@ -52,7 +58,7 @@ export class GameClassicComponent implements OnInit {
             let nextDirection: Direction = this._keypressService.getNextDirection();
             await this.gameboard!.moveSnake(nextDirection);
             this.score = this.gameboard!.snake.countPelletsConsumed;
-            await utils.sleep(1000);
+            await utils.sleep(90);
         } while (
             !this.gameboard!.snake.isOutOfBounds &&
             !this.gameboard!.snake.hasCollidedWithSelf
@@ -115,7 +121,8 @@ export class GameClassicComponent implements OnInit {
                 this.gameMode,
                 this.score
             );
-
+            
+            this.highScore = this.score;
             this.highScoreModal!.show();
         }
     }
@@ -130,7 +137,7 @@ export class GameClassicComponent implements OnInit {
             return;
         }
 
-    this._keypressService.setNextDirection(Direction.fromKey(event.key),
+        this._keypressService.setNextDirection(Direction.fromKey(event.key),
             this.gameboard!.snake.currentDirection);
     }
 }
