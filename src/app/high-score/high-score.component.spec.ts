@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModalComponent } from './modal.component';
+import { HighScoreComponent } from './high-score.component';
 
-describe('ModalComponent', () => {
-//   let component: ModalComponent;
-//   let fixture: ComponentFixture<ModalComponent>;
+describe('HighScoreComponent', () => {
+//   let component: HighScoreComponent;
+//   let fixture: ComponentFixture<HighScoreComponent>;
 
 //   beforeEach(async () => {
 //     await TestBed.configureTestingModule({
-//       declarations: [ ModalComponent ]
+//       declarations: [ HighScoreComponent ]
 //     })
 //     .compileComponents();
 //   });
 
 //   beforeEach(() => {
-//     fixture = TestBed.createComponent(ModalComponent);
+//     fixture = TestBed.createComponent(HighScoreComponent);
 //     component = fixture.componentInstance;
 //     fixture.detectChanges();
 //   });

@@ -12,6 +12,7 @@ import { SecondsToMinutesPipe } from './pipes/seconds-to-minutes-pipe.pipe';
 import { PercentagePipe } from './pipes/percentage.pipe';
 import { StorageService } from './shared/storage-service';
 import { ModalComponent } from './modal/modal.component';
+import { HighScoreComponent } from './high-score/high-score.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ModalComponent } from './modal/modal.component';
     GameBlitzComponent,
     SecondsToMinutesPipe,
     PercentagePipe,
-    ModalComponent 
+    ModalComponent,
+    HighScoreComponent 
   ],
   imports: [
     BrowserModule,
@@ -30,9 +32,10 @@ import { ModalComponent } from './modal/modal.component';
     ReactiveFormsModule, 
     BrowserAnimationsModule,
     RouterModule.forRoot([
-      { path: 'classic', component: GameClassicComponent, data: { animation: 'GamePage'} },
-      { path: 'blitz', component: GameBlitzComponent, data: { animation: 'GamePage'} },
-      { path: '', component: MenuComponent, pathMatch: 'full', data: { animation: 'MenuPage'}},
+      { path: 'classic', component: GameClassicComponent, data: { animation: 'Page2'} },
+      { path: 'blitz', component: GameBlitzComponent, data: { animation: 'Page2'} },
+      { path: 'highscores', component: HighScoreComponent, data: { animation: 'Page2'} },
+      { path: '', component: MenuComponent, pathMatch: 'full', data: { animation: 'Page1'}},
       { path: '**', component: MenuComponent } // wildcard path if the path doesn't match anything
     ])
   ],

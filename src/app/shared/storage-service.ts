@@ -2,15 +2,29 @@ import { Injectable } from '@angular/core';
 import { GameMode } from 'src/domain/enums';
 import { HighScore } from 'src/domain/highScore';
 
+const blitzKey = "Blitz";
+const classicKey = "Classic";
+
 @Injectable()
 export class StorageService {
     public getHighScore(playerName: string, gameMode: GameMode): HighScore | null {
-        let highScoreOrNull: string | null = localStorage.getItem(`${playerName}_${gameMode}`);
+        let highScoreOrNull: string | null = localStorage.getItem(
+            `${playerName}_${gameMode}`
+        );
 
         if (highScoreOrNull) {
             return JSON.parse(highScoreOrNull) as HighScore;
+        } else {
+            return null;
         }
-        else {
+    }
+
+    private getHighScoreByStorageKey(storageKey: string): HighScore | null {
+        let highScoreOrNull: string | null = localStorage.getItem(storageKey);
+
+        if (highScoreOrNull) {
+            return JSON.parse(highScoreOrNull) as HighScore;
+        } else {
             return null;
         }
     }
@@ -20,10 +34,40 @@ export class StorageService {
             let highScore: HighScore = {
                 playerName: playerName,
                 gameMode: gameMode,
-                score: score
-            }
+                score: score,
+            };
 
-            localStorage.setItem(`${playerName}_${gameMode}`, JSON.stringify(highScore));
+            localStorage.setItem(
+                `${playerName}_${gameMode}`,
+                JSON.stringify(highScore)
+            );
         }
+    }
+
+    public getAllHighScores(gameMode?: GameMode): HighScore[] {
+        let highScores: HighScore[] = [];
+        let storageKeys: string[] = [];
+
+        for (let key in localStorage) {
+            storageKeys.push(key);
+        }
+
+        for (let key of storageKeys){
+            if (key.includes(classicKey) || key.includes(blitzKey)){
+                let highScore = this.getHighScoreByStorageKey(key);
+
+                if(highScore){
+                    highScores.push(highScore);
+                }
+            }
+        }
+
+        if (gameMode) {
+            highScores = highScores.filter(
+                (hs) => hs.gameMode === gameMode.toString()
+            );
+        }
+
+        return highScores;
     }
 }
