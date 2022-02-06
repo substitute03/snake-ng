@@ -8,6 +8,7 @@ import { ModalComponent } from '../modal/modal.component';
 import { KeypressService } from '../shared/keypress-service';
 import { StorageService } from '../shared/storage-service';
 import * as bootstrap from 'bootstrap';
+import { GameCardComponent } from '../game-card/game-card.component';
 
 @Component({
     selector: 'sng-game',
@@ -16,7 +17,8 @@ import * as bootstrap from 'bootstrap';
 })
 export class GameClassicComponent implements OnInit {
     @ViewChild('gameboard') gameboard?: GameboardComponent;
-    @ViewChild('highScoreModal') highScoreModal?: ModalComponent;
+    @ViewChild('highScoreModal') highScoreModal?: ModalComponent;  
+    @ViewChild('gameCard') gameCard?: GameCardComponent;
 
     public gameMode: GameMode = GameMode.Classic;
     public playerName: string = '';
@@ -69,6 +71,7 @@ export class GameClassicComponent implements OnInit {
     }
 
     public reset(): void {
+        this.gameCard!.stopSpinLogo();
         this.gameboard!.reset();
         this.score = 0;
         this._keypressService.clearDirectionQueue();
@@ -106,6 +109,7 @@ export class GameClassicComponent implements OnInit {
 
     private handleGameOver(): void {
         utils.playSound(EventType.GameOver);
+        this.gameCard!.spinLogo();
         this.gameState = GameState.GameOver;
         this.checkHighScore();
     }

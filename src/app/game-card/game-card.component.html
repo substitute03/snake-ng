@@ -1,12 +1,12 @@
 <div class="hstack gap-3 mt-3 mb-3">
     <span class="display-5">
-        <img class="img-fluid" style="width:90px" src="/assets/images/angular.svg">
+        <img [class.spin-limited]="shouldSpinLogo" class="img-fluid" style="width:90px" src="/assets/images/angular.svg">
         SnakeNg
     </span>
     <div class="vr"></div>
     <div class="vstack">
         <span class="lead"><i class="bi bi-person-bounding-box me-2 text-danger"></i>{{playerName}}</span>
         <span class="lead"><i class="bi bi-controller me-2 text-danger"></i>{{gameMode}}</span>
-        <span class="lead"><i class="bi bi-trophy me-2 text-danger"></i>High score: {{highScore}}</span>
+        <span class="lead"><i class="bi bi-trophy me-2 text-danger"></i>Personal best: {{highScore}}</span>
     </div>
 </div>

@@ -19,7 +19,7 @@ export class GameBlitzComponent {
     @ViewChild('highScoreModal') highScoreModal?: ModalComponent;
 
     private stopwatchSubscription = new Subscription();
-    private readonly timeLimit: number = 5;
+    private readonly timeLimit: number = 60;
     private timeleft: number = this.timeLimit;
     private blazingCounter: number = 0;
 
