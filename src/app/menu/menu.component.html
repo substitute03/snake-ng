@@ -5,14 +5,19 @@
                 <img class="img-fluid" style="width:90px" src="/assets/images/angular.svg">SnakeNg
             </span>
             <form [formGroup]="gameOptionsForm" class="w-100">
-                <label for="playerName" class="form-label h5">Name</label>
-                <input id="playerName" formControlName="playerName" class="form-control mb-3" type="text">
-                <p class="text-danger" *ngIf="playerName!.invalid && (playerName!.dirty || playerName!.touched)" >Name must contain at least 3 characters.</p>
-    
-                <label for="gameModes" class="form-label h5">Game Mode</label>
-                <select formControlName="gameMode" class="form-select form-control" aria-label="game modes">
-                    <option *ngFor="let mode of gameModes">{{mode}}</option>
-                </select>
+                <div class="form-floating">
+                    <input formControlName="playerName" type="text" class="form-control" id="floatingInput" placeholder="Enter player name">
+                    <label for="floatingInput">Name</label>
+                </div>
+                <p class="text-danger text-start" *ngIf="playerName!.invalid && (playerName!.dirty || playerName!.touched)" >
+                    Name must contain at least 3 characters.
+                </p>
+                <div class="form-floating mt-3">
+                    <select formControlName="gameMode" class="form-select" id="gmaeModes" aria-label="Game mode">
+                        <option *ngFor="let mode of gameModes">{{mode}}</option>
+                    </select>
+                    <label for="floatingSelect">Game Mode</label>
+                  </div>
             </form>
             <button type="submit" (click)="handlePlayClicked()" class="btn btn-danger">
                 <div class="row gx-0">

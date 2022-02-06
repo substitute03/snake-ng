@@ -121,7 +121,7 @@ export class GameClassicComponent implements OnInit {
                 this.gameMode,
                 this.score
             );
-            
+
             this.highScore = this.score;
             this.highScoreModal!.show();
         }
