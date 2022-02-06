@@ -19,6 +19,15 @@
     <div class="col-5"></div>
 </div>
 
+<div class="row">
+    <div class="col-2 offset-5">
+        <label>Game Mode</label>
+        <select [(ngModel)]="selectedGameMode" class="form-control form-select" (change)="filterHighScores()">
+            <option *ngFor="let mode of gameModes">{{mode}}</option>
+        </select>
+    </div>
+</div>
+
 <div class="row col-6 offset-3 mt-3">
     <table class="table table-hover table-bordered">
         <thead class="bg-danger text-white border-bottom ">
