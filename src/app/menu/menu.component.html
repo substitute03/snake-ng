@@ -12,7 +12,7 @@
                 <p class="text-danger text-start" *ngIf="playerName!.invalid && (playerName!.dirty || playerName!.touched)" >
                     Name must contain at least 3 characters.
                 </p>
-                <div class="form-floating mt-3">
+                <div class="form-floating mt-3 mb-5">
                     <select formControlName="gameMode" class="form-select form-control" id="gmaeModes" aria-label="Game mode">
                         <option *ngFor="let mode of gameModes">{{mode}}</option>
                     </select>
@@ -25,7 +25,7 @@
                         Play
                         <i class="bi bi-chevron-compact-right float-end"></i>
                     </div>
-                </div>
+                </div> 
             </button>
             <button type="button" [routerLink]="'/highscores'" class="btn btn-danger">
                 <div class="row gx-0">
@@ -35,6 +35,58 @@
                     </div>
                 </div>
             </button>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#helpModal">
+                <div class="row gx-0">
+                    <div class="col-12 text-center">
+                        Help
+                    </div>
+                </div>
+            </button>
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Help</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <h3 id="snakeng">SnakeNg</h3>
+            <p>SnakeNg is a take on the classic Snake game built in Angular 13.</p>
+            <h3 id="overview">Overview</h3>
+            <p>The aim of the game is to score as many points as possible by guiding the Snake to consume pellets. Each time a pellet is consumed, the Snake will become one block longer.
+            You will get a game over if the Snake either goes out of bounds or collides with itself.</p>
+            <h3 id="game-modes">Game Modes</h3>
+            <ul>
+            <li><strong>Classic</strong><ul>
+            <li>A recreation of the classic Snake game. Consume as many pellets as you can without going out of bounds or allowing the Snake to collide with itself.</li>
+            </ul>
+            </li>
+            <li><strong>Blitz</strong><ul>
+            <li>The same rules as Classic but, now, consuming pellets will fill up the Blazing meter. When the Blazing meter is full, the Snake will start blazing for 5 seconds. During this time, all pellets are worth double points and collecting pellets will extend the Blazing status for an extra 1 second. Score as many points as you can in 1 minute.</li>
+            </ul>
+            </li>
+            </ul>
+            <h3 id="high-scores">High Scores</h3>
+            <ul>
+            <li>Your high scores for each game mode will be stored in your browser&#39;s local storage. See how high you can score!</li>
+            </ul>
+            <h3 id="controls">Controls</h3>
+            <p>The Snake is controlled using the WASD or the arrow keys.</p>
+            <ul>
+            <li>W or Up Arrow - move the Snake up.</li>
+            <li>A or Left Arrow- move the Snake left.</li>
+            <li>S or Down Arrow - move the Snake down.</li>
+            <li>D or Right Arrow - move thte Snake right.</li>
+            </ul>       
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

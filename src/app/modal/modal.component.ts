@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import * as bootstrap from 'bootstrap';
 
 @Component({
     selector: 'sng-modal',
@@ -11,11 +12,15 @@ export class ModalComponent {
 
     public isShowModal: boolean = false;
 
+    get modal(){
+        return new bootstrap.Modal(document.getElementById("modal")!, {});
+    }
+
     public show(): void{
-        this.isShowModal = true;
+        this.modal.show();
     }
 
     public hide(): void{
-        this.isShowModal = false;
+        this.modal.hide();
     }
 }
