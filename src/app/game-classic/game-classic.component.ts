@@ -58,6 +58,11 @@ export class GameClassicComponent implements OnInit {
         await this.prepareGame();
 
         do {
+            while(this.gameState === GameState.Paused){
+              await utils.sleep(1);
+              continue;
+            }
+
             let nextDirection: Direction = this._keypressService.getNextDirection();
             await this.gameboard!.moveSnake(nextDirection);
             this.score = this.gameboard!.snake.countPelletsConsumed;
@@ -138,9 +143,20 @@ export class GameClassicComponent implements OnInit {
 
     @HostListener('document:keydown', ['$event'])
     public handleKeyboardEvent(event: KeyboardEvent) {
-        if (this.gameState != GameState.InProgress) {
-            return;
-        }
+      if (this.gameState != GameState.InProgress && this.gameState != GameState.Paused) {
+        return;
+    }
+
+        if (event.key === " "){
+          if (this.gameState != GameState.Paused && this.gameState === GameState.InProgress){
+            this.gameState = GameState.Paused;
+            this.message = "Paused"
+          }
+          else if (this.gameState === GameState.Paused){
+            this.gameState = GameState.InProgress;
+            this.message = "";
+          }
+        }        
 
         this._keypressService.setNextDirection(Direction.fromKey(event.key),
             this.gameboard!.snake.currentDirection);

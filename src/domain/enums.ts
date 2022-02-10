@@ -3,7 +3,8 @@ export enum GameState{
     Setup,
     InProgress,
     TimeUp,
-    GameOver
+    GameOver,
+    Paused
 }
 
 export enum CellType {
