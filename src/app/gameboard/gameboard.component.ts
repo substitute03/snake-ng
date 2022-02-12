@@ -132,6 +132,7 @@ export class GameboardComponent {
 
         if (parcelAdjacentCell === null){
             moveToCell.cellType = CellType.Empty;
+            this.snake.removeTail();
             this.parcelOutOfBounds.emit();
             return;
         }
