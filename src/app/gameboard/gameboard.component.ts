@@ -4,6 +4,7 @@ import { Direction } from 'src/domain/direction';
 import { CellType } from 'src/domain/enums';
 import { Snake } from 'src/domain/snake';
 import { EventEmitter } from '@angular/core';
+import { indexOf } from 'lodash';
 
 const boardSize: number = 15;
 
@@ -17,7 +18,7 @@ export class GameboardComponent {
     public snake: Snake = new Snake();
 
     @Output() pelletConsumed = new EventEmitter<void>();
-
+    
     constructor(private changeDetector: ChangeDetectorRef) {
         this.create();
         this.moveSnake.bind(this);
@@ -32,7 +33,7 @@ export class GameboardComponent {
     }
 
     public reset(): void {
-        this.cells.forEach(c => c.cellType = CellType.Empty);
+        this.cells.forEach(c => { c.cellType = CellType.Empty; c.isDeliveryPoint = false });
         this.snake = new Snake();
     }
 
@@ -45,15 +46,39 @@ export class GameboardComponent {
     }
 
     public spawnPellet(): void {
-        this.getEmptyCell().cellType = CellType.Pellet;
+        this.getEmptyCell(true).cellType = CellType.Pellet;
     }
 
-    private getEmptyCell(): Cell {
+    public spawnParcel(): void {
+        this.getEmptyCell(false).cellType = CellType.Parcel;
+    }
+
+    public spawnDeliveryPoint(): void{
+        this.getEmptyCell(true).isDeliveryPoint = true;
+    }
+
+    private getEmptyCell(includePerimeterCells: boolean): Cell {
         let emptyCells: Cell[] =
             this.cells.filter(c => c.cellType == CellType.Empty);
 
-        let randomEmptyCellIndex =
-            Math.floor((Math.random() * emptyCells.length) + 0);
+        let randomEmptyCellIndex: number;
+        if (includePerimeterCells){
+            randomEmptyCellIndex =
+                Math.floor((Math.random() * emptyCells.length) + 0);
+        }
+        else {
+            let emptyCentreCells = emptyCells.filter(c =>
+                c.x != 1 &&
+                 c.x != boardSize &&
+                  c.y != 1 &&
+                   c.y != boardSize);
+
+            let randomEmptyCentreCell: Cell =
+                emptyCentreCells[Math.floor((Math.random() * emptyCentreCells.length) + 0)];
+
+            randomEmptyCellIndex = emptyCells.indexOf(emptyCells.filter(c =>
+                c.x === randomEmptyCentreCell.x && c.y === randomEmptyCentreCell.y)[0]);                
+        }
 
         return emptyCells[randomEmptyCellIndex];
     }
@@ -84,13 +109,42 @@ export class GameboardComponent {
                 this.snake.currentDirection = directionToMove;
                 this.snake.consumePellet();
                 this.pelletConsumed.emit();
+                break;
+            case CellType.Parcel:
+                this.snake.currentDirection = directionToMove;
+                let parcelAdjacentCell = this.getAdjacentCell(this.snake.currentDirection, moveToCell)
+
+                if (parcelAdjacentCell === null){
+                    this.snake.isOutOfBounds = true;
+                    return;
+                }
+                else if (parcelAdjacentCell.cellType === CellType.Empty && !parcelAdjacentCell.isDeliveryPoint){
+                    // Move the Parcel
+                    parcelAdjacentCell.cellType = CellType.Parcel;
+                    moveToCell.cellType = CellType.Empty;
+
+                    // Move the Snake
+                    this.snake.tail.cellType = CellType.Empty;
+                    this.snake.cells.pop();
+                    moveToCell.cellType = CellType.Empty;
+                }
+                else if (parcelAdjacentCell.isDeliveryPoint){
+                    parcelAdjacentCell.cellType = CellType.Pellet; // Open the Parcel and reveal the Pellet
+                    moveToCell.cellType = CellType.Empty; // Remove the Parcel
+                    parcelAdjacentCell.isDeliveryPoint = false; // Remove the Delivery Point
+
+                    // Move the Snake
+                    this.snake.tail.cellType = CellType.Empty;
+                    this.snake.cells.pop();
+                    moveToCell.cellType = CellType.Empty;
+                }
         }
 
         this.snake.cells.unshift(moveToCell);
         this.snake.head.cellType = this.snake.isBlazing ? CellType.Blazing : CellType.Snake;
     }
 
-    private getAdjacentCell(direction: Direction, { x, y }: Cell): Cell | null {
+    public getAdjacentCell(direction: Direction, { x, y }: Cell): Cell | null {
         let adjacentCell: Cell | undefined;
 
         if (direction === Direction.up) {

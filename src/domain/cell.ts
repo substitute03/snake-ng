@@ -2,6 +2,8 @@ import { CellType } from "./enums";
 
 export class Cell{
   public cellType: CellType = CellType.Empty;
+  public isDeliveryPoint: boolean = false;
+
   public readonly x: number;
   public readonly y: number;
 

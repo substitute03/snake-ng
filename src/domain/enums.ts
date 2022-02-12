@@ -11,12 +11,16 @@ export enum CellType {
     Empty = "empty",
     Pellet = "pellet",
     Snake = "snake",
-    Blazing = "blazing"
+    Blazing = "blazing",
+    Parcel = "parcel",
+    DeliveryPoint = "delivery-point",
+    None = "none"
 }
 
 export enum GameMode{
     Classic = "Classic",
-    Blitz = "Blitz"
+    Blitz = "Blitz",
+    Delivery = "Delivery"
 }
 
 export enum EventType{

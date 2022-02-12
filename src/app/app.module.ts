@@ -15,6 +15,7 @@ import { ModalComponent } from './modal/modal.component';
 import { HighScoreComponent } from './high-score/high-score.component';
 import { KeypressService } from './shared/keypress-service';
 import { GameCardComponent } from './game-card/game-card.component';
+import { GameDeliveryComponent } from './game-delivery/game-delivery.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { GameCardComponent } from './game-card/game-card.component';
     PercentagePipe,
     ModalComponent,
     HighScoreComponent,
-    GameCardComponent 
+    GameCardComponent,
+    GameDeliveryComponent 
   ],
   imports: [
     BrowserModule,
@@ -37,6 +39,7 @@ import { GameCardComponent } from './game-card/game-card.component';
     RouterModule.forRoot([
       { path: 'classic', component: GameClassicComponent, data: { animation: 'Page2'} },
       { path: 'blitz', component: GameBlitzComponent, data: { animation: 'Page2'} },
+      { path: 'delivery', component: GameDeliveryComponent, data: { animation: 'Page2'} },
       { path: 'highscores', component: HighScoreComponent, data: { animation: 'Page2'} },
       { path: '', component: MenuComponent, pathMatch: 'full', data: { animation: 'Page1'}},
       { path: '**', component: MenuComponent } // wildcard path if the path doesn't match anything

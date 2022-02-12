@@ -40,7 +40,7 @@
     }
 
         .gameboard > .cell.snake {
-            background-color: green;
+            background-color: green !important;
         }
         .gameboard > .cell.blazing {
             background-color: orange;
@@ -50,4 +50,10 @@
         }
         .gameboard > .cell.pellet {
             background-color: black;
+        }
+        .gameboard > .cell.parcel {
+            background-color: #bc8c47;
+        }
+        .gameboard > .cell.delivery-point {
+            background-color: #d3d3d3;
         }
