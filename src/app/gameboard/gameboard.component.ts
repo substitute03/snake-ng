@@ -18,6 +18,8 @@ export class GameboardComponent {
     public snake: Snake = new Snake();
 
     @Output() pelletConsumed = new EventEmitter<void>();
+    @Output() parcelRepositioned = new EventEmitter<void>();
+    @Output() parcelDelivered = new EventEmitter<void>();
     
     constructor(private changeDetector: ChangeDetectorRef) {
         this.create();
@@ -118,6 +120,7 @@ export class GameboardComponent {
                     // Spawn a new Parcel to stop the player gettting stuck at the edge of the board.
                     moveToCell.cellType = CellType.Empty;
                     this.spawnParcel();
+                    this.parcelRepositioned.emit();
                     return;
                 }
                 else if (parcelAdjacentCell.cellType === CellType.Empty && !parcelAdjacentCell.isDeliveryPoint){
@@ -130,7 +133,9 @@ export class GameboardComponent {
                     this.snake.cells.pop();
                 }
                 else if (parcelAdjacentCell.isDeliveryPoint){
-                    parcelAdjacentCell.cellType = CellType.Pellet; // Open the Parcel and reveal the Pellet
+                    parcelAdjacentCell.cellType = CellType.Pellet;
+                    this.parcelDelivered.emit();
+
                     moveToCell.cellType = CellType.Empty; // Remove the Parcel
                     parcelAdjacentCell.isDeliveryPoint = false; // Remove the Delivery Point
 

@@ -25,6 +25,8 @@ export enum GameMode{
 
 export enum EventType{
     PelletConsumed,
+    ParcelRepositioned,
+    ParcelDelivered,
     CountdownInProgress,
     CountdownEnd,
     GameOver,

@@ -104,6 +104,14 @@ export class GameDeliveryComponent implements OnInit {
         this.gameboard!.spawnDeliveryPoint();
     }
 
+    public handleParcelRepositioned(): void{
+        utils.playSound(EventType.ParcelRepositioned);
+    }
+
+    public handleParcelDelivered(): void{
+        utils.playSound(EventType.ParcelDelivered);
+    }
+
     private async prepareGame(): Promise<void> {
         this.gameState = GameState.Setup;
         this.reset();

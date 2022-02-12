@@ -28,6 +28,14 @@ export async function playSound(event: EventType): Promise<void>{
             audio.src = "../assets/sounds/PelletConsumed.mp3";
             break;
         }
+        case EventType.ParcelRepositioned: {
+            audio.src = "../assets/sounds/ParcelRepositioned.mp3";
+            break;
+        }
+        case EventType.ParcelDelivered: {
+            audio.src = "../assets/sounds/ParcelDelivered.mp3";
+            break;
+        }
         case EventType.GameOver: {
             audio.src = "../assets/sounds/GameOver.mp3";
             break;
