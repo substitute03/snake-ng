@@ -35,6 +35,11 @@ export class Snake{
         }
     }
 
+    public removeTail():void{
+        this.tail.cellType = CellType.Empty;
+        this.cells.pop();
+    }
+
     private _isBlazing: boolean = false;
     get isBlazing(): boolean {
         return this._isBlazing;

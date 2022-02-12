@@ -104,8 +104,9 @@ export class GameDeliveryComponent implements OnInit {
         this.gameboard!.spawnDeliveryPoint();
     }
 
-    public handleParcelRepositioned(): void{
+    public handleParcelOutOfBounds(): void{
         utils.playSound(EventType.ParcelRepositioned);
+        this.gameboard!.spawnParcel();
     }
 
     public handleParcelDelivered(): void{

@@ -4,7 +4,6 @@ import { Direction } from 'src/domain/direction';
 import { CellType } from 'src/domain/enums';
 import { Snake } from 'src/domain/snake';
 import { EventEmitter } from '@angular/core';
-import { indexOf } from 'lodash';
 
 const boardSize: number = 15;
 
@@ -18,7 +17,7 @@ export class GameboardComponent {
     public snake: Snake = new Snake();
 
     @Output() pelletConsumed = new EventEmitter<void>();
-    @Output() parcelRepositioned = new EventEmitter<void>();
+    @Output() parcelOutOfBounds = new EventEmitter<void>();
     @Output() parcelDelivered = new EventEmitter<void>();
     
     constructor(private changeDetector: ChangeDetectorRef) {
@@ -99,55 +98,59 @@ export class GameboardComponent {
 
         switch (moveToCell?.cellType) {
             case CellType.Empty:
-                this.snake.currentDirection = directionToMove;
-                this.snake.tail.cellType = CellType.Empty;
-                this.snake.cells.pop();
+                this.moveToEmpty(directionToMove);
                 break;
             case CellType.Snake:
             case CellType.Blazing:
                 this.snake.hasCollidedWithSelf = true;
                 break;
             case CellType.Pellet:
-                this.snake.currentDirection = directionToMove;
-                this.snake.consumePellet();
-                this.pelletConsumed.emit();
+                this.moveToPellet(directionToMove);
                 break;
             case CellType.Parcel:
-                this.snake.currentDirection = directionToMove;
-                let parcelAdjacentCell = this.getAdjacentCell(this.snake.currentDirection, moveToCell)
-
-                if (parcelAdjacentCell === null){
-                    // Spawn a new Parcel to stop the player gettting stuck at the edge of the board.
-                    moveToCell.cellType = CellType.Empty;
-                    this.spawnParcel();
-                    this.parcelRepositioned.emit();
-                    return;
-                }
-                else if (parcelAdjacentCell.cellType === CellType.Empty && !parcelAdjacentCell.isDeliveryPoint){
-                    // Move the Parcel
-                    parcelAdjacentCell.cellType = CellType.Parcel;
-                    moveToCell.cellType = CellType.Empty;
-
-                    // Move the Snake
-                    this.snake.tail.cellType = CellType.Empty;
-                    this.snake.cells.pop();
-                }
-                else if (parcelAdjacentCell.isDeliveryPoint){
-                    parcelAdjacentCell.cellType = CellType.Pellet;
-                    this.parcelDelivered.emit();
-
-                    moveToCell.cellType = CellType.Empty; // Remove the Parcel
-                    parcelAdjacentCell.isDeliveryPoint = false; // Remove the Delivery Point
-
-                    // Move the Snake
-                    this.snake.tail.cellType = CellType.Empty;
-                    this.snake.cells.pop();
-                    moveToCell.cellType = CellType.Empty;
-                }
+                this.moveToParcel(directionToMove, moveToCell);
         }
 
         this.snake.cells.unshift(moveToCell);
         this.snake.head.cellType = this.snake.isBlazing ? CellType.Blazing : CellType.Snake;
+    }
+
+    private moveToEmpty(directionToMove: Direction): void{
+        this.snake.currentDirection = directionToMove;
+        this.snake.removeTail();
+    }
+
+    private moveToPellet(directionToMove: Direction): void{
+        this.snake.currentDirection = directionToMove;
+        this.snake.consumePellet();
+        this.pelletConsumed.emit();
+    }
+
+    private moveToParcel(directionToMove: Direction, moveToCell: Cell): void{
+        this.snake.currentDirection = directionToMove;
+        let parcelAdjacentCell = this.getAdjacentCell(this.snake.currentDirection, moveToCell)
+
+        if (parcelAdjacentCell === null){
+            moveToCell.cellType = CellType.Empty;
+            this.parcelOutOfBounds.emit();
+            return;
+        }
+        else if (parcelAdjacentCell.cellType === CellType.Empty && !parcelAdjacentCell.isDeliveryPoint){
+            // Move the Parcel
+            parcelAdjacentCell.cellType = CellType.Parcel;
+            moveToCell.cellType = CellType.Empty;
+            this.snake.removeTail();
+        }
+        else if (parcelAdjacentCell.isDeliveryPoint){
+            parcelAdjacentCell.cellType = CellType.Pellet;
+            this.parcelDelivered.emit();
+
+            moveToCell.cellType = CellType.Empty; // Remove the Parcel
+            parcelAdjacentCell.isDeliveryPoint = false; // Remove the Delivery Point
+
+            moveToCell.cellType = CellType.Empty;
+            this.snake.removeTail();
+        }
     }
 
     public getAdjacentCell(direction: Direction, { x, y }: Cell): Cell | null {
