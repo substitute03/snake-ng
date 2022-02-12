@@ -115,7 +115,9 @@ export class GameboardComponent {
                 let parcelAdjacentCell = this.getAdjacentCell(this.snake.currentDirection, moveToCell)
 
                 if (parcelAdjacentCell === null){
-                    this.snake.isOutOfBounds = true;
+                    // Spawn a new Parcel to stop the player gettting stuck at the edge of the board.
+                    moveToCell.cellType = CellType.Empty;
+                    this.spawnParcel();
                     return;
                 }
                 else if (parcelAdjacentCell.cellType === CellType.Empty && !parcelAdjacentCell.isDeliveryPoint){
@@ -126,7 +128,6 @@ export class GameboardComponent {
                     // Move the Snake
                     this.snake.tail.cellType = CellType.Empty;
                     this.snake.cells.pop();
-                    moveToCell.cellType = CellType.Empty;
                 }
                 else if (parcelAdjacentCell.isDeliveryPoint){
                     parcelAdjacentCell.cellType = CellType.Pellet; // Open the Parcel and reveal the Pellet
