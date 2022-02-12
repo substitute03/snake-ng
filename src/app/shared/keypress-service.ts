@@ -6,7 +6,6 @@ export class KeypressService{
     private directionQueue: Direction[] = [];
 
     public getNextDirection(): Direction {
-        console.log(this.directionQueue.map(d => d.value));
         return this.directionQueue.shift() || Direction.none;
     }
 

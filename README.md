@@ -24,6 +24,6 @@ The Snake is controlled using the WASD or the arrow keys.
 - W or Up Arrow - move the Snake up.
 - A or Left Arrow- move the Snake left.
 - S or Down Arrow - move the Snake down.
-- D or Right Arrow - move thte Snake right.
+- D or Right Arrow - move the Snake right.
 
 In Classic mode, press SPACE to pause the game.
