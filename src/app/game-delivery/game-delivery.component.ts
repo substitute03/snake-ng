@@ -131,7 +131,21 @@ export class GameDeliveryComponent implements OnInit {
     }
 
     private checkHighScore(): void{
+        let currentHighScore = this._storageService.getHighScore(
+            this.playerName,
+            this.gameMode
+        );
 
+        if (currentHighScore == null || this.score > currentHighScore.score) {
+            this._storageService.addHighScore(
+                this.playerName,
+                this.gameMode,
+                this.score
+            );
+
+            this.highScore = this.score;
+            this.highScoreModal!.show();
+        }
     }
 
     public returnToMenu(): void {
