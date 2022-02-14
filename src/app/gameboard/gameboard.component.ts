@@ -22,7 +22,6 @@ export class GameboardComponent {
     
     constructor(private changeDetector: ChangeDetectorRef) {
         this.create();
-        this.moveSnake.bind(this);
     }
 
     private create(): void {

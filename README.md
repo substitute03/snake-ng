@@ -28,4 +28,4 @@ The Snake is controlled using the WASD or the arrow keys.
 - S or Down Arrow - move the Snake down.
 - D or Right Arrow - move the Snake right.
 
-In Classic mode, press SPACE to pause the game.
+In Classic and Delivery modes, press SPACE to pause the game.
