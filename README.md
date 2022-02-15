@@ -1,4 +1,5 @@
 # SnakeNg
+
 SnakeNg is a take on the classic Snake game built in Angular 13.
 
 ## Overview
@@ -15,7 +16,7 @@ You will get a game over if the Snake either goes out of bounds or collides with
 - **Delivery**
   - Deliver the parcels to the delivery points. When a parcel is delivered, it will be unwrapped and reveal a pellet. Consume pellets to score points. If you push a parcel out of bounds, it will respawn in a random location on the gameboard. Parcels are indicated by brown cells, and delivery points are indicated by grey cells.
 - **Portal**
-- Pellets are now portals. Two pelllets will now spawn at the same time, and consuming a pellet will cause the Snake to appear at the other pellet.
+  - Pellets are now portals. Two pelllets will now spawn at the same time, and consuming a pellet will cause the Snake to appear at the other pellet.
 
 ## High Scores
 
