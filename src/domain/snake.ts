@@ -8,7 +8,6 @@ export class Snake{
     public directionToMove: Direction = Direction.left;
     public isOutOfBounds: boolean = false;
     public hasCollidedWithSelf: boolean = false;
-    public countPelletsConsumed: number = 0;
     
     get head(): Cell {
         return this.cells[0];
@@ -23,15 +22,6 @@ export class Snake{
     public changeDirection(direction: Direction): void{
         if(direction.isOppositeTo(this.currentDirection)){
             this.directionToMove = direction;
-        }
-    }
-
-    public consumePellet(): void{
-        if (this.isBlazing){
-            this.countPelletsConsumed += 2;
-        }
-        else{
-            this.countPelletsConsumed += 1;
         }
     }
 

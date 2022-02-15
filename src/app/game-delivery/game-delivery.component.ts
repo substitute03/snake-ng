@@ -65,7 +65,6 @@ export class GameDeliveryComponent implements OnInit {
 
             let nextDirection: Direction = this._keypressService.getNextDirection();
             await this.gameboard!.moveSnake(nextDirection);
-            this.score = this.gameboard!.snake.countPelletsConsumed;
             await utils.sleep(120);
         } while (
             !this.gameboard!.snake.isOutOfBounds &&
@@ -100,6 +99,7 @@ export class GameDeliveryComponent implements OnInit {
 
     public handlePelletConsumed(): void {
         utils.playSound(EventType.PelletConsumed);
+        this.score++;
         this.gameboard!.spawnParcel();
         this.gameboard!.spawnDeliveryPoint();
     }

@@ -63,7 +63,6 @@ export class GameBlitzComponent {
         do {
             let nextDirection: Direction = this._keypressService.getNextDirection();
             await this.gameboard!.moveSnake(nextDirection);
-            this.score = this.gameboard!.snake.countPelletsConsumed;
             await utils.sleep(90);
         } while (!this.gameboard!.snake.isOutOfBounds &&
             !this.gameboard!.snake.hasCollidedWithSelf &&
@@ -114,6 +113,7 @@ export class GameBlitzComponent {
         if (!this.gameboard!.snake.isBlazing) {
             if (this.blazingCounter < 5) {
                 this.blazingCounter++;
+                this.score++;
                 this.progressBarPercentage = 20 * this.blazingCounter;
             }
             if (this.blazingCounter === 5) {
@@ -122,6 +122,7 @@ export class GameBlitzComponent {
             }
         }
         else if (this.gameboard!.snake.isBlazing) {
+            this.score += 2;
             if (this.progressBarPercentage < 100) {
                 this.progressBarPercentage = this.progressBarPercentage + 20 > 100 ? 100 : this.progressBarPercentage + 20;
             }

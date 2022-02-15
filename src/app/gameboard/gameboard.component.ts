@@ -19,6 +19,7 @@ export class GameboardComponent {
     @Output() pelletConsumed = new EventEmitter<void>();
     @Output() parcelOutOfBounds = new EventEmitter<void>();
     @Output() parcelDelivered = new EventEmitter<void>();
+    @Output() portalEntered = new EventEmitter<void>();
     
     constructor(private changeDetector: ChangeDetectorRef) {
         this.create();
@@ -33,7 +34,12 @@ export class GameboardComponent {
     }
 
     public reset(): void {
-        this.cells.forEach(c => { c.cellType = CellType.Empty; c.isDeliveryPoint = false });
+        this.cells.forEach(c => { 
+            c.cellType = CellType.Empty;
+             c.isDeliveryPoint = false;
+              c.isPortal = false 
+            });
+
         this.snake = new Snake();
     }
 
@@ -55,6 +61,20 @@ export class GameboardComponent {
 
     public spawnDeliveryPoint(): void{
         this.getEmptyCell(true).isDeliveryPoint = true;
+    }
+
+    public spawnPortals(): void{
+        let portal1 = this.getEmptyCell(false);
+        portal1.cellType = CellType.Portal; portal1.isPortal = true;
+
+        let portal2 = this.getEmptyCell(false);
+        portal2.cellType = CellType.Portal; portal2.isPortal= true;
+    }
+
+    private despawnPortals(): void{
+        this.cells.filter(c => c.isPortal).forEach(c => {
+            c.isPortal = false; c.cellType = CellType.Empty
+        });
     }
 
     private getEmptyCell(includePerimeterCells: boolean): Cell {
@@ -108,9 +128,12 @@ export class GameboardComponent {
                 break;
             case CellType.Parcel:
                 this.moveToParcel(directionToMove, moveToCell);
+                break;
+            case CellType.Portal:
+                moveToCell = this.moveToPortal(directionToMove, moveToCell);
         }
 
-        this.snake.cells.unshift(moveToCell);
+        this.snake.cells.unshift(moveToCell); 
         this.snake.head.cellType = this.snake.isBlazing ? CellType.Blazing : CellType.Snake;
     }
 
@@ -121,8 +144,15 @@ export class GameboardComponent {
 
     private moveToPellet(directionToMove: Direction): void{
         this.snake.currentDirection = directionToMove;
-        this.snake.consumePellet();
         this.pelletConsumed.emit();
+    }
+
+    private moveToPortal(directionToMove: Direction, moveToCell: Cell): Cell{
+        this.snake.currentDirection = directionToMove;
+        let exitPortalCell = this.cells.filter(c => c != moveToCell && c.isPortal)[0];
+        this.despawnPortals();
+        this.portalEntered.emit();
+        return exitPortalCell;
     }
 
     private moveToParcel(directionToMove: Direction, moveToCell: Cell): void{

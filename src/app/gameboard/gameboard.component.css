@@ -57,3 +57,6 @@
         .gameboard > .cell.delivery-point {
             background-color: #d3d3d3;
         }
+        .gameboard > .cell.portal {
+            background-color: black;
+        }

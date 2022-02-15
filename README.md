@@ -14,6 +14,8 @@ You will get a game over if the Snake either goes out of bounds or collides with
   - The same rules as Classic but, now, consuming pellets will fill up the Blazing meter. When the Blazing meter is full, the Snake will start blazing for 5 seconds. During this time, all pellets are worth double points and collecting pellets will extend the Blazing status for an extra 1 second. Score as many points as you can in 1 minute.
 - **Delivery**
   - Deliver the parcels to the delivery points. When a parcel is delivered, it will be unwrapped and reveal a pellet. Consume pellets to score points. If you push a parcel out of bounds, it will respawn in a random location on the gameboard. Parcels are indicated by brown cells, and delivery points are indicated by grey cells.
+- **Portal**
+- Pellets are now portals. Two pelllets will now spawn at the same time, and consuming a pellet will cause the Snake to appear at the other pellet.
 
 ## High Scores
 

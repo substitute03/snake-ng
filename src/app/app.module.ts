@@ -16,6 +16,7 @@ import { HighScoreComponent } from './high-score/high-score.component';
 import { KeypressService } from './shared/keypress-service';
 import { GameCardComponent } from './game-card/game-card.component';
 import { GameDeliveryComponent } from './game-delivery/game-delivery.component';
+import { GamePortalComponent } from './game-portal/game-portal.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { GameDeliveryComponent } from './game-delivery/game-delivery.component';
     ModalComponent,
     HighScoreComponent,
     GameCardComponent,
-    GameDeliveryComponent 
+    GameDeliveryComponent,
+    GamePortalComponent 
   ],
   imports: [
     BrowserModule,
@@ -40,6 +42,7 @@ import { GameDeliveryComponent } from './game-delivery/game-delivery.component';
       { path: 'classic', component: GameClassicComponent, data: { animation: 'Page2'} },
       { path: 'blitz', component: GameBlitzComponent, data: { animation: 'Page2'} },
       { path: 'delivery', component: GameDeliveryComponent, data: { animation: 'Page2'} },
+      { path: 'portal', component: GamePortalComponent, data: { animation: 'Page2'} },
       { path: 'highscores', component: HighScoreComponent, data: { animation: 'Page2'} },
       { path: '', component: MenuComponent, pathMatch: 'full', data: { animation: 'Page1'}},
       { path: '**', component: MenuComponent } // wildcard path if the path doesn't match anything
