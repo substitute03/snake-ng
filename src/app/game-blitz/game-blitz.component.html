@@ -23,7 +23,7 @@
     </div>
 </div>
 <div class="row col-12 text-center">
-    <sng-gameboard #gameboard (pelletConsumed)="handlePelletConsumed()"></sng-gameboard>
+    <sng-gameboard #gameboard [gameboardConfig]="this.gameboardConfig" (pelletConsumed)="handlePelletConsumed()"></sng-gameboard>
 </div>
 <div class="row text-center mt-4">
     <div class="col-4 offset-4">

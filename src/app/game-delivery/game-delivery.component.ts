@@ -9,6 +9,7 @@ import { StorageService } from '../shared/storage-service';
 import * as utils from 'src/app/utils';
 import { GameCardComponent } from '../game-card/game-card.component';
 import { ModalComponent } from '../modal/modal.component';
+import { gameboardConfig } from 'src/domain/boardSize';
 
 @Component({
     selector: 'sng-game-delivery',
@@ -20,6 +21,7 @@ export class GameDeliveryComponent implements OnInit {
     @ViewChild('highScoreModal') highScoreModal?: ModalComponent;  
     @ViewChild('gameCard') gameCard?: GameCardComponent;
 
+    public gameboardConfig = gameboardConfig.medium;
     public readonly gameMode: GameMode = GameMode.Delivery;
     public playerName: string = '';
     public highScore: number = 0;

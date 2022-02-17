@@ -8,6 +8,7 @@ import { ModalComponent } from '../modal/modal.component';
 import { KeypressService } from '../shared/keypress-service';
 import { StorageService } from '../shared/storage-service';
 import * as utils from 'src/app/utils';
+import { gameboardConfig } from 'src/domain/boardSize';
 
 @Component({
   selector: 'sng-game-portal',
@@ -19,6 +20,7 @@ export class GamePortalComponent implements OnInit {
   @ViewChild('highScoreModal') highScoreModal?: ModalComponent;  
   @ViewChild('gameCard') gameCard?: GameCardComponent;
 
+  public gameboardConfig = gameboardConfig.medium;
   public gameMode: GameMode = GameMode.Portal;
   public playerName: string = '';
   public highScore: number = 0;

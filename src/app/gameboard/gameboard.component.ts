@@ -1,33 +1,36 @@
-import { ChangeDetectorRef, Component, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, Output } from '@angular/core';
+import { gameboardConfig } from 'src/domain/boardSize';
 import { Cell } from 'src/domain/cell';
 import { Direction } from 'src/domain/direction';
 import { CellType } from 'src/domain/enums';
 import { Snake } from 'src/domain/snake';
 import { EventEmitter } from '@angular/core';
 
-const boardSize: number = 15;
-
 @Component({
     selector: 'sng-gameboard',
     templateUrl: './gameboard.component.html',
     styleUrls: ['./gameboard.component.css']
 })
-export class GameboardComponent {
+export class GameboardComponent implements OnInit {
     public cells: Cell[] = [];
     public snake: Snake = new Snake();
+
+    @Input() gameboardConfig = gameboardConfig.medium;
 
     @Output() pelletConsumed = new EventEmitter<void>();
     @Output() parcelOutOfBounds = new EventEmitter<void>();
     @Output() parcelDelivered = new EventEmitter<void>();
     @Output() portalEntered = new EventEmitter<void>();
     
-    constructor(private changeDetector: ChangeDetectorRef) {
+    constructor() { }
+
+    ngOnInit(): void {
         this.create();
     }
 
     private create(): void {
-        for (let y = 1; y <= boardSize; y++) {
-            for (let x = 1; x <= boardSize; x++) {
+        for (let y = 1; y <= this.gameboardConfig.size; y++) {
+            for (let x = 1; x <= this.gameboardConfig.size; x++) {
                 this.cells.push(new Cell(x, y));
             }
         }
@@ -89,9 +92,9 @@ export class GameboardComponent {
         else {
             let emptyCentreCells = emptyCells.filter(c =>
                 c.x != 1 &&
-                 c.x != boardSize &&
+                 c.x != this.gameboardConfig.size &&
                   c.y != 1 &&
-                   c.y != boardSize);
+                   c.y != this.gameboardConfig.size);
 
             let randomEmptyCentreCell: Cell =
                 emptyCentreCells[Math.floor((Math.random() * emptyCentreCells.length) + 0)];

@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { StorageService } from '../shared/storage-service';
 import { ModalComponent } from '../modal/modal.component';
 import { KeypressService } from '../shared/keypress-service';
+import { gameboardConfig } from 'src/domain/boardSize';
 
 @Component({
     selector: 'sng-game-blitz',
@@ -18,6 +19,7 @@ export class GameBlitzComponent {
     @ViewChild('gameboard') gameboard?: GameboardComponent;
     @ViewChild('highScoreModal') highScoreModal?: ModalComponent;
 
+    public gameboardConfig = gameboardConfig.medium;
     private stopwatchSubscription = new Subscription();
     private readonly timeLimit: number = 60;
     private timeleft: number = this.timeLimit;

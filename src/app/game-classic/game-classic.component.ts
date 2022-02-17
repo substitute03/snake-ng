@@ -9,6 +9,7 @@ import { KeypressService } from '../shared/keypress-service';
 import { StorageService } from '../shared/storage-service';
 import * as bootstrap from 'bootstrap';
 import { GameCardComponent } from '../game-card/game-card.component';
+import { gameboardConfig } from 'src/domain/boardSize';
 
 @Component({
     selector: 'sng-game',
@@ -20,6 +21,7 @@ export class GameClassicComponent implements OnInit {
     @ViewChild('highScoreModal') highScoreModal?: ModalComponent;  
     @ViewChild('gameCard') gameCard?: GameCardComponent;
 
+    public gameboardConfig = gameboardConfig.medium;
     public gameMode: GameMode = GameMode.Classic;
     public playerName: string = '';
     public highScore: number = 0;

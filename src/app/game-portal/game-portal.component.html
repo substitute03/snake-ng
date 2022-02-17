@@ -12,7 +12,7 @@
     <p class="display-6">Score: {{score}}</p>
 </div>
 <div class="row col-12 text-center">
-    <sng-gameboard #gameboard (portalEntered)="handlePortalEntered()"></sng-gameboard>
+    <sng-gameboard #gameboard [gameboardConfig]="this.gameboardConfig" (portalEntered)="handlePortalEntered()"></sng-gameboard>
 </div>
 <div class="row text-center mt-4">
     <div class="col-4 offset-4">
