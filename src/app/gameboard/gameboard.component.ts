@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { gameboardConfig } from 'src/domain/boardSize';
 import { Cell } from 'src/domain/cell';
 import { Direction } from 'src/domain/direction';
@@ -47,9 +47,12 @@ export class GameboardComponent implements OnInit {
     }
 
     public spawnSnake(): void {
-        this.cells.find(c => c.x === 13 && c.y === 8)!.cellType = CellType.Snake;
-        this.cells.find(c => c.x === 14 && c.y === 8)!.cellType = CellType.Snake;
-        this.cells.find(c => c.x === 15 && c.y === 8)!.cellType = CellType.Snake;
+        let gameboardSize = this.gameboardConfig.size;
+        let centre = Math.round(gameboardSize / 2);
+
+        this.cells.find(c => c.x === gameboardSize - 2 && c.y === centre)!.cellType = CellType.Snake;
+        this.cells.find(c => c.x === gameboardSize - 1 && c.y === centre)!.cellType = CellType.Snake;
+        this.cells.find(c => c.x === gameboardSize && c.y === centre)!.cellType = CellType.Snake;
 
         this.snake.cells = this.cells.filter(c => c.cellType === CellType.Snake);
     }

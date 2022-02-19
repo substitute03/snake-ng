@@ -4,7 +4,14 @@
     border-left: 1px solid #000000;
     border-top: 1px solid #000000;
 }
-    .gameboard-md > .cell {
+.gameboard-sm {
+    display: inline-grid;
+    grid-template-columns: repeat(7, auto);
+    border-left: 1px solid #000000;
+    border-top: 1px solid #000000;
+}
+
+    :is(.gameboard-md, .gameboard-sm) > .cell {
         border-right: 1px solid #000000;
         border-bottom: 1px solid #000000;
         height: 50px;
@@ -12,7 +19,7 @@
     }
 
     @media (max-width: 480px){
-        .gameboard-md > .cell {
+        :is(.gameboard-md) > .cell {
             border-right: 1px solid #000000;
             border-bottom: 1px solid #000000;
             height: 20px;
@@ -21,7 +28,7 @@
     }
 
     @media (min-width: 481px) and (max-width: 767px){
-        .gameboard-md > .cell {
+        :is(.gameboard-md) > .cell {
             border-right: 1px solid #000000;
             border-bottom: 1px solid #000000;
             height: 30px;
@@ -31,7 +38,7 @@
 
     /* Media Query for Tablets Ipads portrait mode */
     @media (min-width: 768px) and (max-width: 1024px){
-        .gameboard-md > .cell {
+        :is(.gameboard-md) > .cell {
             border-right: 1px solid #000000;
             border-bottom: 1px solid #000000;
             height: 40px;
@@ -39,24 +46,24 @@
         }
     }
 
-        .gameboard-md > .cell.snake {
+        .cell.snake {
             background-color: green !important;
         }
-        .gameboard-md > .cell.blazing {
+        .cell.blazing {
             background-color: orange;
         }
-        .gameboard-md > .cell.empty {
+        .cell.empty {
             background-color: white;
         }
-        .gameboard-md > .cell.pellet {
+        .cell.pellet {
             background-color: black;
         }
-        .gameboard-md > .cell.parcel {
+        .cell.parcel {
             background-color: #bc8c47;
         }
-        .gameboard-md > .cell.delivery-point {
+        .cell.delivery-point {
             background-color: #d3d3d3;
         }
-        .gameboard-md > .cell.portal {
+        .cell.portal {
             background-color: black;
         }

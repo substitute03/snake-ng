@@ -1,25 +1,17 @@
-type BoardSize = "small" | "medium" | "large" | "extraLarge";
+export class gameboardConfig{
+    name: string = "";
+    size: number = 0;
+    css: string = "";
 
-interface Config {
-    css: string,
-    size: number
-}
+    public static readonly small = new gameboardConfig("Small", 7, 'gameboard-sm');
+    public static readonly medium = new gameboardConfig("Medium", 15, 'gameboard-md');
+    public static readonly large = new gameboardConfig("Large", 21, 'gameboard-lg');
+    public static readonly extraLarge = new gameboardConfig("Extra Large", 27, 'gameboard-xl');
+    public static readonly all: gameboardConfig[] = [this.small, this.medium, this.large, this.extraLarge];
 
-export const gameboardConfig: Record<BoardSize, Config> = {
-    small: {
-        css: "gameboard-sm",
-        size: 7
-    },
-    medium: {
-        css: "gameboard-md",
-        size: 15,
-    },
-    large: {
-        css: "gameboard-lg",
-        size: 21 
-    },
-    extraLarge: {
-        css: "gameboard-xl",
-        size: 27
+    private constructor(name: string, size: number, css: string){
+        this.name = name;
+        this.size = size;
+        this.css = css;
     }
-};
+}

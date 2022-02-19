@@ -7,7 +7,6 @@ import { GameboardComponent } from '../gameboard/gameboard.component';
 import { ModalComponent } from '../modal/modal.component';
 import { KeypressService } from '../shared/keypress-service';
 import { StorageService } from '../shared/storage-service';
-import * as bootstrap from 'bootstrap';
 import { GameCardComponent } from '../game-card/game-card.component';
 import { gameboardConfig } from 'src/domain/boardSize';
 
