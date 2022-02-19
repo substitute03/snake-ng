@@ -1,25 +1,60 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { GameboardComponent } from '../gameboard/gameboard.component';
+import { KeypressService } from '../shared/keypress-service';
+import { StorageService } from '../shared/storage-service';
 
 import { GameBlitzComponent } from './game-blitz.component';
 
 describe('GameBlitzComponent', () => {
-//   let component: GameBlitzComponent;
-//   let fixture: ComponentFixture<GameBlitzComponent>;
+    let component: GameBlitzComponent;
+    let mockRouter: Router;
+    let mockStorageService: StorageService;
+    let mockKeypressService: KeypressService;
+    
+    mockRouter = jasmine.createSpyObj(['navigate']);
 
-//   beforeEach(async () => {
-//     await TestBed.configureTestingModule({
-//       declarations: [ GameBlitzComponent ]
-//     })
-//     .compileComponents();
-//   });
+    mockStorageService = jasmine.createSpyObj([
+        'getPlayerName',
+        'getHighScore',
+        'addHighScore'
+    ]);
 
-//   beforeEach(() => {
-//     fixture = TestBed.createComponent(GameBlitzComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
+    mockKeypressService = jasmine.createSpyObj([
+        'getNextDirection',
+        'clearDirectionQueue',
+        'setNextDirection'
+    ]);
 
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
+
+    beforeEach(() => {
+        component = new GameBlitzComponent(mockRouter, mockStorageService, mockKeypressService);
+        component.gameboard = new GameboardComponent();
+        component.gameboard!.ngOnInit(); // Create the gameboard and spawn the snake.
+    });
+
+    it('should increase the score by 1 when the snake consumes a pellet and the snake is not blazing', function(){
+        // Arrange
+        component.score = 0;
+        component.gameboard!.snake.isBlazing = false;
+
+        // Act
+        component!.handlePelletConsumed();
+
+        // Assert
+        expect(component.score).toBe(1);
+    });
+
+    it('should increase the score by 2 when the snake consumes a pellet and the snake is blazing', function(){
+        // Arrange
+        component.score = 0;
+        component.gameboard!.snake.isBlazing = true;
+
+        // Act
+        component!.handlePelletConsumed();
+
+        // Assert
+        expect(component.score).toBe(2);
+    });
+
 });

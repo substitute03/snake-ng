@@ -6,7 +6,7 @@ import { GameboardComponent } from './gameboard.component';
 describe('GameboardComponent', () => {
   let component: GameboardComponent;
 
-  beforeEach(async () => {
+  beforeEach(() => {
     component = new GameboardComponent();
     component.ngOnInit();
   });
