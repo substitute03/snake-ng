@@ -17,6 +17,10 @@ You will get a game over if the Snake either goes out of bounds or collides with
   - Deliver the parcels to the delivery points. When a parcel is delivered, it will be unwrapped and reveal a pellet. Consume pellets to score points. If you push a parcel out of bounds, it will respawn in a random location on the gameboard. Parcels are indicated by brown cells, and delivery points are indicated by grey cells.
 - **Portal**
   - Pellets are now portals. Two pelllets will now spawn at the same time, and consuming a pellet will cause the Snake to appear at the other pellet.
+- **Shadow**
+  - You now play alongside a shadow of yourself. Collect pellets without colliding with yourself or your shadow; but beware, if your shadow consumes a pellet, your score will be reduced by one.
+- **Bounce**
+    - When you consume a pellet, the direction of the snake will now be reversed.
 
 ## High Scores
 
@@ -31,4 +35,4 @@ The Snake is controlled using the WASD or the arrow keys.
 - S or Down Arrow - move the Snake down.
 - D or Right Arrow - move the Snake right.
 
-In Classic and Delivery modes, press SPACE to pause the game.
+Press SPACE to pause the game. This is not available in Blitz mode.
