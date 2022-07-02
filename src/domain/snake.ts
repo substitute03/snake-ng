@@ -20,8 +20,31 @@ export class Snake{
     public constructor(){}
 
     public changeDirection(direction: Direction): void{
-        if(direction.isOppositeTo(this.currentDirection)){
+        if (direction.isOppositeTo(this.currentDirection)){
             this.directionToMove = direction;
+        }
+    }
+
+    public reverseDirection(): void{
+        this.cells.reverse();
+
+        let cellAdjacentToHead = this.cells[1];
+
+        if (cellAdjacentToHead.x === this.head.x - 1){
+            this.directionToMove = Direction.right;
+            this.currentDirection = Direction.right;
+        }
+        else if (cellAdjacentToHead.x === this.head.x + 1){
+            this.directionToMove = Direction.left;
+            this.currentDirection = Direction.left;
+        }
+        else if (cellAdjacentToHead.y === this.head.y - 1){
+            this.directionToMove = Direction.down;
+            this.currentDirection = Direction.down;
+        }
+        else if (cellAdjacentToHead.y === this.head.y + 1){
+            this.directionToMove = Direction.up;
+            this.currentDirection = Direction.up;
         }
     }
 
@@ -29,6 +52,15 @@ export class Snake{
         this.tail.cellType = CellType.Empty;
         this.cells.pop();
     }
+
+    private _isShadow: boolean = false;
+    get isShadow(): boolean{
+        return this._isShadow;
+    }
+    set isShadow(value: boolean){
+        this._isShadow = value;
+        this.cells.forEach(cell => cell.cellType = CellType.Shadow);
+    }   
 
     private _isBlazing: boolean = false;
     get isBlazing(): boolean {

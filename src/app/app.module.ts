@@ -17,6 +17,8 @@ import { KeypressService } from './shared/keypress-service';
 import { GameCardComponent } from './game-card/game-card.component';
 import { GameDeliveryComponent } from './game-delivery/game-delivery.component';
 import { GamePortalComponent } from './game-portal/game-portal.component';
+import { GameShadowComponent } from './game-shadow/game-shadow.component';
+import { GameBounceComponent } from './game-bounce/game-bounce.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { GamePortalComponent } from './game-portal/game-portal.component';
     HighScoreComponent,
     GameCardComponent,
     GameDeliveryComponent,
-    GamePortalComponent 
+    GamePortalComponent,
+    GameShadowComponent,
+    GameBounceComponent
   ],
   imports: [
     BrowserModule,
@@ -43,6 +47,8 @@ import { GamePortalComponent } from './game-portal/game-portal.component';
       { path: 'blitz', component: GameBlitzComponent, data: { animation: 'Page2'} },
       { path: 'delivery', component: GameDeliveryComponent, data: { animation: 'Page2'} },
       { path: 'portal', component: GamePortalComponent, data: { animation: 'Page2'} },
+      { path: 'shadow', component: GameShadowComponent, data: { animation: 'Page2'} },
+      { path: 'bounce', component: GameBounceComponent, data: { animation: 'Page2'} },
       { path: 'highscores', component: HighScoreComponent, data: { animation: 'Page2'} },
       { path: '', component: MenuComponent, pathMatch: 'full', data: { animation: 'Page1'}},
       { path: '**', component: MenuComponent } // wildcard path if the path doesn't match anything

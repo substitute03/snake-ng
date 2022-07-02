@@ -15,14 +15,17 @@ export enum CellType {
     Parcel = "parcel",
     DeliveryPoint = "delivery-point",
     None = "none",
-    Portal = "portal"
+    Portal = "portal",
+    Shadow = "shadow"
 }
 
 export enum GameMode{
     Classic = "Classic",
     Blitz = "Blitz",
     Delivery = "Delivery",
-    Portal = "Portal"
+    Portal = "Portal",
+    Shadow = "Shadow",
+    Bounce = "Bounce"
 }
 
 export enum EventType{

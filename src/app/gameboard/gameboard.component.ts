@@ -14,10 +14,13 @@ import { EventEmitter } from '@angular/core';
 export class GameboardComponent implements OnInit {
     public cells: Cell[] = [];
     public snake: Snake = new Snake();
+    public shadowSnake: Snake | null = null;
+    private doReverseSnakeDirection: boolean = false;
 
     @Input() gameboardConfig = gameboardConfig.medium;
 
     @Output() pelletConsumed = new EventEmitter<void>();
+    @Output() shadowSnakePelletConsumed = new EventEmitter<void>();
     @Output() parcelOutOfBounds = new EventEmitter<void>();
     @Output() parcelDelivered = new EventEmitter<void>();
     @Output() portalEntered = new EventEmitter<void>();
@@ -44,6 +47,7 @@ export class GameboardComponent implements OnInit {
             });
 
         this.snake = new Snake();
+        this.shadowSnake = null;
     }
 
     public spawnSnake(): void {
@@ -55,6 +59,20 @@ export class GameboardComponent implements OnInit {
         this.cells.find(c => c.x === gameboardSize && c.y === centre)!.cellType = CellType.Snake;
 
         this.snake.cells = this.cells.filter(c => c.cellType === CellType.Snake);
+    }
+
+    public spawnShadowSnake():void {
+        this.shadowSnake = new Snake();
+        let gameboardSize = this.gameboardConfig.size;
+        let centre = Math.round(gameboardSize / 2);
+
+        this.cells.find(c => c.x === 3 && c.y === centre)!.cellType = CellType.Shadow;
+        this.cells.find(c => c.x === 2 && c.y === centre)!.cellType = CellType.Shadow;
+        this.cells.find(c => c.x === 1 && c.y === centre)!.cellType = CellType.Shadow;
+
+        this.shadowSnake.cells = this.cells.filter(c => c.cellType === CellType.Shadow);
+        this.shadowSnake.cells.reverse();
+        this.shadowSnake.currentDirection = Direction.right;
     }
 
     public spawnPellet(): void {
@@ -127,8 +145,9 @@ export class GameboardComponent implements OnInit {
                 break;
             case CellType.Snake:
             case CellType.Blazing:
+            case CellType.Shadow:
                 this.snake.hasCollidedWithSelf = true;
-                break;
+                return;
             case CellType.Pellet:
                 this.moveToPellet(directionToMove);
                 break;
@@ -141,11 +160,42 @@ export class GameboardComponent implements OnInit {
 
         this.snake.cells.unshift(moveToCell); 
         this.snake.head.cellType = this.snake.isBlazing ? CellType.Blazing : CellType.Snake;
+
+        if (this.doReverseSnakeDirection){
+            this.snake.reverseDirection();
+            this.doReverseSnakeDirection = false;
+        }
+
+        if (this.shadowSnake){
+            this.moveShadowSnake(directionToMove.opposite());
+        }
+    }
+
+    public reverseSnakeDirection(): void{
+        this.doReverseSnakeDirection = true;
+    }
+
+    private moveShadowSnake(directionToMove: Direction): void{
+        let moveToCell: Cell | null = this.getAdjacentCell(directionToMove, this.shadowSnake!.head);
+
+        if (moveToCell){
+            if (moveToCell.cellType === CellType.Pellet){
+                this.shadowSnakePelletConsumed.emit();
+            }
+            
+            this.shadowSnake!.cells.unshift(moveToCell);
+            this.shadowSnake!.head.cellType = CellType.Shadow;
+        }
     }
 
     private moveToEmpty(directionToMove: Direction): void{
         this.snake.currentDirection = directionToMove;
         this.snake.removeTail();
+
+        if(this.shadowSnake){
+            this.shadowSnake.currentDirection = directionToMove.opposite();
+            this.shadowSnake.removeTail();
+        }
     }
 
     private moveToPellet(directionToMove: Direction): void{

@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col d-flex justify-content-center">
+        <sng-game-card #gameCard
+            [playerName]="playerName"
+            [gameMode]="gameMode"
+            [highScore]="highScore"
+            [gameState]="gameState">
+        </sng-game-card>
+    </div>
+</div>
+<div class="row col-12 text-center">
+    <p class="display-6">Score: {{score}}</p>
+</div>
+<div class="row col-12 text-center">
+    <sng-gameboard #gameboard [gameboardConfig]="this.gameboardConfig" (pelletConsumed)="handlePelletConsumed()"></sng-gameboard>
+</div>
+<div class="row text-center mt-4">
+    <div class="col-4 offset-4">
+        <h3>{{message}}</h3>
+    </div>
+</div>
+<div *ngIf="isPreGameOrGameOver" class="mt-4">
+    <div class="row">
+        <div class="col-6">
+            <button type="button" class="btn btn-outline-danger btn-lg float-end" (click)="returnToMenu()">
+                <i class="bi bi-chevron-compact-left float-start"></i>
+                Main Menu
+            </button>
+        </div>
+        <div class="col-6">
+            <button type="button" class="btn btn-danger btn-lg float-start ps-5 pe-5" (click)="startGameLoop()">Play</button>
+        </div>
+    </div>
+</div>
+
+<sng-modal #highScoreModal [title]="'New High Score!'" [body]="'🎉 You got a new high score! Your score has been saved. 🎉'"></sng-modal>
