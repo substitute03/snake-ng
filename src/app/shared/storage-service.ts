@@ -4,6 +4,10 @@ import { HighScore } from 'src/domain/highScore';
 
 const blitzKey = "Blitz";
 const classicKey = "Classic";
+const deliveryKey = "Delivery";
+const portalKey = "Portal";
+const shadowKey = "Shadow";
+const bounceKey = "Bounce";
 
 @Injectable()
 export class StorageService {
@@ -53,7 +57,9 @@ export class StorageService {
         }
 
         for (let key of storageKeys){
-            if (key.includes(classicKey) || key.includes(blitzKey)){
+            if (key.includes(classicKey) || key.includes(blitzKey) 
+            || key.includes(deliveryKey) || key.includes(portalKey)
+            || key.includes(shadowKey) || key.includes(bounceKey)){
                 let highScore = this.getHighScoreByStorageKey(key);
 
                 if(highScore){

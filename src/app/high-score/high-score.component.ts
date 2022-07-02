@@ -37,9 +37,9 @@ export class HighScoreComponent implements OnInit {
         let highestGameModeScore = this.highScores.find(hs => hs.gameMode === mode)!.score;
 
         if (highestGameModeScore){
-            let highestGameMoreScorers = this.highScores.filter(hs => hs.score === highestGameModeScore);
+            let highestGameModeScorers = this.highScores.filter(hs => hs.score === highestGameModeScore);
 
-            highestGameMoreScorers.forEach(hgs => hgs.playerName = `${hgs.playerName} 👑`)
+            highestGameModeScorers.forEach(hgms => hgms.playerName = `${hgms.playerName} 👑`)
         }
     });    
   }
