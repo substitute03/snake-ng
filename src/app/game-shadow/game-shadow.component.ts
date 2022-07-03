@@ -106,7 +106,6 @@ export class GameShadowComponent implements OnInit {
 
     public handleShadowSnakePelletConsumed(): void{
         utils.playSound(EventType.Error);
-        this.score--;
         this.gameboard?.spawnPellet();
     }
 

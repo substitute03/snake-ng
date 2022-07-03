@@ -18,7 +18,7 @@ You will get a game over if the Snake either goes out of bounds or collides with
 - **Portal**
   - Pellets are now portals. Two pelllets will now spawn at the same time, and consuming a pellet will cause the Snake to appear at the other pellet.
 - **Shadow**
-  - You now play alongside a shadow of yourself. Collect pellets without colliding with yourself or your shadow; but beware, if your shadow consumes a pellet, your score will be reduced by one.
+  - You now play alongside a shadow of yourself. Collect pellets without colliding with yourself or your shadow.
 - **Bounce**
     - When you consume a pellet, the direction of the snake will now be reversed.
 
