@@ -26,18 +26,19 @@ export class HighScoreComponent implements OnInit {
 
       this.getHighScores();
       this.displayedHighScores = this.highScores;
-      this.gameModes.unshift("All"); 
+      this.gameModes.unshift('All');
   }
 
   private getHighScores(): void{
     this.highScores = this._storageService.getAllHighScores();
     this.highScores = _.orderBy(this.highScores, ['gameMode', 'score'], ['asc', 'desc']);
 
-    this.gameModes.forEach(mode => {
-        let highestGameModeScore = this.highScores.find(hs => hs.gameMode === mode)!.score;
+    this.gameModes.forEach(gameMode => {
+        let highestGameModeScore = this.highScores.find(hs => hs.gameMode === gameMode);
 
         if (highestGameModeScore){
-            let highestGameModeScorers = this.highScores.filter(hs => hs.score === highestGameModeScore);
+            const highestScore = highestGameModeScore.score;
+            let highestGameModeScorers = this.highScores.filter(hs => hs.score === highestScore);
 
             highestGameModeScorers.forEach(hgms => hgms.playerName = `${hgms.playerName} 👑`)
         }

@@ -38,6 +38,7 @@
             </tr>
         </thead>
         <tbody>
+            <p *ngIf="displayedHighScores.length === 0">No high scores found.</p>
             <tr *ngFor="let highScore of displayedHighScores">
                 <td>{{highScore.playerName}}</td>
                 <td>{{highScore.gameMode}}</td>
